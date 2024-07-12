@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\00_hello_world\00_hello_world.cpp">
+    <ClCompile Include="..\00_hello_world\00_hello_world_in_oop.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
