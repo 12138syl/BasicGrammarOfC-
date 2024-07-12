@@ -7,6 +7,8 @@ class HelloWorld
         {
             std::cout << "Hello World in oop!\n";
         }
+
+
 };
 int main()
 {
