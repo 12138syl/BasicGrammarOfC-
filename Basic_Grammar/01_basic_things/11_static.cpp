@@ -12,6 +12,7 @@ void func() {
 int main() {
     func(); // 第一次调用func()
     func(); // 第二次调用func()
+    func();
     // 注意，由于count是静态的，它的值将在两次调用之间保持不变。
     return 0;
 }
