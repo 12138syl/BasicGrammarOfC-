@@ -18,10 +18,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99542b1b-7c9b-4a18-9b62-9aa951024503" name="Changes" comment="clion git">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clion git test.md" beforeDir="false" afterPath="$PROJECT_DIR$/OOP.md" afterDir="false" />
+    <list default="true" id="99542b1b-7c9b-4a18-9b62-9aa951024503" name="Changes" comment="添加OOP.md">
+      <change beforePath="$PROJECT_DIR$/OOP.md" beforeDir="false" afterPath="$PROJECT_DIR$/OOP.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,14 +45,10 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://H:/MyProjects/C-C++/BasicGrammarOfCpp/Object_Oriented/00_HelloWorld/HelloWorld.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://H:/MyProjects/C-C++/BasicGrammarOfCpp/Object_Oriented/00_HelloWorld/HelloWorld.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://H:/MyProjects/C-C++/BasicGrammarOfCpp/Object_Oriented/00_HelloWorld/HelloWorld.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://H:/MyProjects/C-C++/BasicGrammarOfCpp/Object_Oriented/00_HelloWorld/HelloWorld.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/01_BasicGrammar/Basic/Person.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/01_BasicGrammar/Basic/Person.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/01_BasicGrammar/Basic/main.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/01_BasicGrammar/Static/attribute.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/01_BasicGrammar/Static/attribute.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -119,7 +113,7 @@
       <workItem from="1720874717253" duration="5338000" />
       <workItem from="1720887076554" duration="307000" />
       <workItem from="1720887396494" duration="10674000" />
-      <workItem from="1720940138028" duration="489000" />
+      <workItem from="1720940138028" duration="858000" />
     </task>
     <task id="LOCAL-00001" summary="B">
       <option name="closed" value="true" />
@@ -161,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720937520742</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="添加OOP.md">
+      <option name="closed" value="true" />
+      <created>1720940669716</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1720940669716</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +222,7 @@
     <MESSAGE value="clion git test" />
     <MESSAGE value="clion git test0" />
     <MESSAGE value="clion git test finall" />
-    <option name="LAST_COMMIT_MESSAGE" value="clion git test finall" />
+    <MESSAGE value="添加OOP.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加OOP.md" />
   </component>
 </project>
