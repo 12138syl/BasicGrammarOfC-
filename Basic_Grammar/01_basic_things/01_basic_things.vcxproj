@@ -138,6 +138,7 @@
     <ClCompile Include="08_函数.cpp" />
     <ClCompile Include="09_指针与引用.cpp" />
     <ClCompile Include="10_数组.cpp" />
+    <ClCompile Include="11_static.cpp" />
     <ClCompile Include="qfmath.cpp" />
   </ItemGroup>
   <ItemGroup>
