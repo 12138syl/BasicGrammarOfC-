@@ -1,0 +1,3385 @@
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/09_指针与引用.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/09_指针与引用.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/09_指针与引用.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/09_指针与引用.cpp	
++++ /dev/null	
+@@ -1,255 +0,0 @@
+-//#include <iostream>
+-//
+-//using namespace std;
+-//
+-////������ִ�е�ʱ�򣬻����ڴ��п���һЩ�ռ䣬�洢һЩ���ݡ����ڴ��ֿ��Է�Ϊ�ĸ�����:
+-//
+-////ջ��:	��ϵͳ�����ڴ�Ĺ�����Ҫ��ź����Ĳ����Լ��ֲ�������
+-////		�ں������ִ�У�ϵͳ�����ͷ�ջ���ڴ棬����Ҫ�û�����
+-////
+-////����:	�ɱ����Ա�ֶ����룬�ֶ��ͷţ������ֶ��ͷţ�
+-////		�����������ϵͳ���գ������������������������ڼ䡣
+-//// 
+-////ȫ����:	ȫ�����ڵı����ڳ������׶��Ѿ�������ڴ�ռ䲢��ʼ����
+-////		����ڴ��ڳ�������������ڼ䶼���ڣ���Ҫ��ž�̬������ȫ�ֱ����ͳ�����
+-//// 
+-////������:	��ų������֮�����ɵĶ����ƴ��룬��������д�ĺ�����
+-////		���Ǵ洢������ġ������ڳ������֮�󣬴洢�ڴ����������ú�����ʱ�򣬻�ѹ��ջ��ִ�����еĴ��롣
+-//
+-//
+-////ȫ����
+-//int g_a = 10;//ȫ���� ����
+-//const int g_b = 10;//ȫ���� ����
+-//static int g_s_a = 10;//ȫ���� ��̬����
+-//static const int g_s_b = 10;//ȫ���� ��̬����
+-//
+-//
+-//void ջ���ڴ����(){
+-//	//ջ��
+-//	int a = 10;
+-//	const int b = 10;
+-//
+-//	static int s_a = 10;
+-//	static const int s_b = 10;
+-//
+-//
+-//	cout << "ջ��������" << &a << endl;
+-//	cout <<"ջ������" << &b << endl;
+-//	cout << endl;
+-//	cout << "ջ����̬������" << &s_a << endl;
+-//	cout << "ջ����̬����" << &s_b << endl;
+-//
+-//
+-//}
+-//
+-//
+-//int* getNumber() {
+-//	int* number = new int(100);
+-//	cout << "number = " << number << endl;
+-//	return number;
+-//}
+-//
+-////ָ���������
+-//void ָ�붨��(){
+-//	// ������һ��int���͵ı���num��ֵΪ100
+-//// Ҳ�������ڴ��п�����һ��4�ֽڵĿռ䣬�洢��ֵΪ100
+-//	int num = 100;
+-//
+-//	// ��ô��num�ĵ�ַ��ô��ȡ�أ�
+-//	// &num �Ϳ��Ի�ȡ������num�ĵ�ַ��
+-//	// ��ô�������ַӦ����ʲô���͵ı����������أ�
+-//	int* p = &num;
+-//
+-//	// ���ǿ���ֱ�����ָ�����͵ı���p�д洢���ڴ��ַ
+-//	cout <<"num=" << num << endl;
+-//	cout<<"&num="<<&num << endl;
+-//	cout <<"p=" << p << endl;	// ����ľ���һ���ڴ��ַ��һ������һ��ʮ�����Ƶ���������ʾ
+-//
+-//	// ��ô�������ͨ�������ַ���ҵ���ָ��Ŀռ��أ�
+-//	// *p
+-//	cout <<"*p=" << *p << endl;	// ����ľ���ָ�����p�д洢�ĵ�ַ��ָ��Ŀռ��д洢��ֵ��Ҳ���Ǳ���num��ֵ��
+-//
+-//}
+-//
+-//
+-//void ��ָ��(){
+-//	cout << "��ָ��" << endl;
+-//	int* p = NULL;		// �����ָ�����pû�д洢�κεĵ�ַ������һ����ָ�롣
+-//
+-//	// ����ΪNULL��ָ��������洢�ĵ�ַ��ʵ��0�����ǵ�ַ0��255���ڴ�Ϊϵͳ�ڴ棬���������
+-//	// ����������֡���ȡ����Ȩ�ޡ�������
+-//	cout << *p << endl;
+-//
+-//
+-//	
+-//
+-//}
+-//
+-//void Ұָ��(){
+-//
+-//	cout << "Ұָ��" << endl;
+-//	// ���ﶨ����һ��ָ����������д��һ����ַ�������ַ��Ӧ�Ŀռ伫�п����ǲ����ڵ�
+-//	int* q = (int*)0x1234;
+-//	// ����Ұָ�룬Ҳ�ǻ���������
+-//	cout << *q << endl;
+-//
+-//}
+-//
+-//void ����ָ����ָ�볣��() {
+-//	cout << "����ָ����ָ�볣��" << endl;
+-//	int num1 = 100;
+-//	int num2 = 200;
+-//
+-//	// const����*֮ǰ����ʾ����ָ�룬��������ָ��
+-//	// ָ���ָ���ǿ����޸ĵģ����ǲ���ͨ��ָ�����޸�ָ��ռ��ֵ
+-//	const int* p1 = &num1;
+-//	p1 = &num2;
+-//	// *p1 = 200;
+-//
+-//	// const����*֮�󣬱�ʾָ�볣���������ָ����һ������
+-//	// ����ͨ��ָ���޸�ָ��ռ��ֵ������ָ���ָ���ǲ������޸ĵ�
+-//	int* const p2 = &num1;
+-//	// p2 = &num2;
+-//	*p2 = 300;
+-//}
+-//
+-////ָ���ں����е�Ӧ��
+-//void changeNumber(int number) {
+-//	number = 100;
+-//	cout << "number = " << number << endl;
+-//	cout << "changeNumber(int number)����" << endl;
+-//}
+-//
+-//void changeNumber(int* number) {
+-//	*number = 100;
+-//	cout<<"*number = " << *number << endl;
+-//	cout << "changeNumber(int* number)����" << endl;
+-//
+-//
+-//}
+-//
+-//void changeNumber1(int n) {
+-//	n = 200;
+-//}
+-//void changeNumber2(int& n) {
+-//	n = 200;
+-//}
+-////��������
+-////�������޷��޸����õ�ֵ
+-//void change(const int& n) {
+-//	cout<<"��������"<<endl;
+-//	// ����������
+-//	 //n = 200;//ȡ��ע�ͻᱨ��
+-//
+-//	cout << n << endl;
+-//
+-//}
+-//
+-//void ����() {
+-//	cout<<"��������"<<endl;
+-//	int num1 = 10;
+-//	int num2 = 20;
+-//
+-//	// ����
+-//	// �����Ƕ���һ�������������������ָ����һ������������������ͬһ������
+-//	// ���ñ����ʼ��������Ϊ��
+-//	// ���ò��ܸı䣬����һ�����壬�Ͳ��ܸı�
+-//	// ���ò��ܶ���Ϊָ�룬ָ����Զ���Ϊ����
+-//	int& num3 = num1;
+-//	num3 = 30;
+-//	cout << "num1 = " << num1 << endl;
+-//	cout << "num3 = " << num3 << endl;
+-//
+-//	// ���õĵײ�ԭ��
+-//	// ���þ���ָ�룬ָ���ָ��������ñ���ָ��ı���
+-//	//������������һ��ָ�볣����
+-//
+-//
+-//	//�����ں����е�Ӧ��
+-//	cout<<"�����ں����е�Ӧ��"<<endl;
+-//	int number = 10;
+-//
+-//	changeNumber1(number);
+-//	cout << "number = " << number << endl;	// ֵ���ݣ���������number��û�з����仯
+-//
+-//	changeNumber2(number);
+-//	cout << "number = " << number << endl;	// ���ô��ݣ���������numberҲ�ᷢ���仯
+-//
+-//
+-//	//��������
+-//	change(num1);
+-//
+-//
+-//
+-//
+-//	//���õı���
+-//
+-//	// ����һ�����͵ı���n
+-//	cout<<"���õı���"<<endl;
+-//	int n = 10;
+-//
+-//	// ����n������
+-//	// �����൱���� int* const rn = &a;
+-//	// ��Ҳ�ͽ���ͨ��Ϊʲôrn��a���õ�ͬһ��ռ䣬����Ϊʲôrn�����޸����á�
+-//	int& rn = n;
+-//
+-//	// ��ͨ�����ý��пռ���ʵ�ʱ��ϵͳ���Զ���ת���� *rn = 200;
+-//	rn = 200;
+-//	cout << "n = " << n << endl;
+-//	cout << "rn = " << rn << endl;
+-//
+-//}
+-//int main()
+-//{
+-//	//// ����ֲ�����
+-//	//int num1 = 10;
+-//	//// ����ֲ�����
+-//	//const int num2 = 10;
+-//	//// ����ֲ���̬����
+-//	//static int num3 = 10;
+-//	//// ����ֲ���̬����
+-//	//static const int num4 = 10;
+-//	//cout << "ȫ����" << endl;
+-//	//cout << "ȫ����������" << &g_a << endl;
+-//	//cout << "ȫ����������" << &g_b << endl;
+-//	//cout  << endl;
+-//	//cout <<"ȫ������̬������" << &g_s_a << endl;
+-//	//cout << "ȫ������̬������" << &g_s_b << endl;
+-//
+-//	//cout << &num1 << endl;		// ջ��
+-//	//cout << &num2 << endl;		// ջ��
+-//	//cout << &num3 << endl;		// ȫ����
+-//	//cout << &num4 << endl;		// ȫ����
+-//	//cout << "ջ��" << endl;
+-//	
+-// //   ջ���ڴ����();
+-//
+-//
+-//	//cout << "������" << endl;
+-//	//int* p = getNumber();
+-//	//cout << "p = " << p << endl;
+-//	//cout << "*p = " << *p << endl;
+-//
+-//
+-//	//ָ�붨��();
+-//	//��ָ��();
+-//	//Ұָ��();
+-//
+-//	////ָ���ں����е�Ӧ��
+-//	//int num = 10;
+-//
+-//	//// ������ֵ���ݣ����ݵ�����changeNumber�е���10������ں������޸Ĳ���number��ֵ��������ı���numû��Ӱ��
+-//	//changeNumber(num);
+-//	//cout << "num = " << num << endl;
+-//
+-//	//// �����ǵ�ַ���ݣ����ݵ�����changeNumber�е��Ǳ���num�ĵ�ַ���ں�����ͨ����ַ�޸�ָ��ռ��ֵ�������num���ܵ�Ӱ��
+-//	//changeNumber(&num);
+-//	//cout << "num = " << num << endl;
+-//
+-//
+-//	//����
+-//	����();
+-//	cin.get();
+-//	return  EXIT_SUCCESS;
+-//
+-//}
+\ No newline at end of file
+Index: cmake-build-debug/.cmake/api/v1/reply/index-2024-07-13T12-34-16-0164.json
+===================================================================
+diff --git a/cmake-build-debug/.cmake/api/v1/reply/index-2024-07-13T12-34-16-0164.json b/cmake-build-debug/.cmake/api/v1/reply/index-2024-07-13T12-34-16-0164.json
+deleted file mode 100644
+--- a/cmake-build-debug/.cmake/api/v1/reply/index-2024-07-13T12-34-16-0164.json	
++++ /dev/null	
+@@ -1,108 +0,0 @@
+-{
+-	"cmake" : 
+-	{
+-		"generator" : 
+-		{
+-			"multiConfig" : false,
+-			"name" : "Ninja"
+-		},
+-		"paths" : 
+-		{
+-			"cmake" : "D:/JetBrains/Clion/bin/cmake/win/x64/bin/cmake.exe",
+-			"cpack" : "D:/JetBrains/Clion/bin/cmake/win/x64/bin/cpack.exe",
+-			"ctest" : "D:/JetBrains/Clion/bin/cmake/win/x64/bin/ctest.exe",
+-			"root" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28"
+-		},
+-		"version" : 
+-		{
+-			"isDirty" : false,
+-			"major" : 3,
+-			"minor" : 28,
+-			"patch" : 1,
+-			"string" : "3.28.1",
+-			"suffix" : ""
+-		}
+-	},
+-	"objects" : 
+-	[
+-		{
+-			"jsonFile" : "codemodel-v2-f6a75eea6c41298e0686.json",
+-			"kind" : "codemodel",
+-			"version" : 
+-			{
+-				"major" : 2,
+-				"minor" : 6
+-			}
+-		},
+-		{
+-			"jsonFile" : "cache-v2-9e5ea223029453dfb165.json",
+-			"kind" : "cache",
+-			"version" : 
+-			{
+-				"major" : 2,
+-				"minor" : 0
+-			}
+-		},
+-		{
+-			"jsonFile" : "cmakeFiles-v1-cc40587a5dd022df3d53.json",
+-			"kind" : "cmakeFiles",
+-			"version" : 
+-			{
+-				"major" : 1,
+-				"minor" : 0
+-			}
+-		},
+-		{
+-			"jsonFile" : "toolchains-v1-39d5569a004f38174b30.json",
+-			"kind" : "toolchains",
+-			"version" : 
+-			{
+-				"major" : 1,
+-				"minor" : 0
+-			}
+-		}
+-	],
+-	"reply" : 
+-	{
+-		"cache-v2" : 
+-		{
+-			"jsonFile" : "cache-v2-9e5ea223029453dfb165.json",
+-			"kind" : "cache",
+-			"version" : 
+-			{
+-				"major" : 2,
+-				"minor" : 0
+-			}
+-		},
+-		"cmakeFiles-v1" : 
+-		{
+-			"jsonFile" : "cmakeFiles-v1-cc40587a5dd022df3d53.json",
+-			"kind" : "cmakeFiles",
+-			"version" : 
+-			{
+-				"major" : 1,
+-				"minor" : 0
+-			}
+-		},
+-		"codemodel-v2" : 
+-		{
+-			"jsonFile" : "codemodel-v2-f6a75eea6c41298e0686.json",
+-			"kind" : "codemodel",
+-			"version" : 
+-			{
+-				"major" : 2,
+-				"minor" : 6
+-			}
+-		},
+-		"toolchains-v1" : 
+-		{
+-			"jsonFile" : "toolchains-v1-39d5569a004f38174b30.json",
+-			"kind" : "toolchains",
+-			"version" : 
+-			{
+-				"major" : 1,
+-				"minor" : 0
+-			}
+-		}
+-	}
+-}
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/05_宏定义与命名空间.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/05_宏定义与命名空间.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/05_宏定义与命名空间.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/05_宏定义与命名空间.cpp	
++++ /dev/null	
+@@ -1,77 +0,0 @@
+-//#include <iostream>
+-//
+-////�궨��
+-//#define PI 3.1415926
+-//#define fun(x) x*x
+-//#define fun2(x,y) x*y
+-//#define fun3 3+2
+-//#define fun4 (3+2)
+-////using namespace std;
+-//namespace A {
+-//    
+-//    int r = 10;
+-//    double s=PI*fun(r);
+-//    void print() {
+-//        std::cout << "�뾶r=" << r << std::endl;
+-//        std::cout << "�ܳ�s=" << s << std::endl;
+-//    }
+-//
+-//
+-//}
+-//namespace B {
+-//    
+-//   int a=fun3;
+-//   int b = fun3 * fun3;//(3+2*3+2)
+-//   int c = fun4;
+-//   int d = fun4 * fun4;//[(3+2)*(3+2)]
+-//   void print() {
+-//        std::cout << "a=" << a << std::endl;
+-//        std::cout << "b=" << b << std::endl;
+-//        std::cout << "c=" << c << std::endl;
+-//        std::cout << "d=" << d << std::endl;
+-//    }
+-//
+-//}
+-//namespace C {
+-//
+-//    char a = 'c';
+-//
+-//    namespace D {
+-//        char b = 'd';
+-//        void print1();
+-//        void print2() {
+-//            std::cout << "a=" << a << std::endl;
+-//            std::cout << "b=" << b << std::endl;
+-//        }
+-//    }
+-//}
+-//void C::D::print1() {
+-//    std::cout << "a=" << a << std::endl;
+-//    std::cout << "b=" << b << std::endl;
+-//}
+-//// ���������ռ�
+-//namespace constant {
+-//    const double P = 3.141592653;
+-//    int num1 = 100;
+-//    int num2 = 200;
+-//}
+-//int main()
+-//{
+-//    A::print();
+-//    std::cout << std::endl;
+-//    B::print();
+-//    std::cout << std::endl;
+-//    C::D::print1();
+-//    std::cout << std::endl;
+-//    C::D::print2();
+-//    std::cout << std::endl;
+-//    //int num1 = 19987;
+-//    using namespace constant;
+-//    std::cout <<num1<< std::endl;  // �����ǰ�����ռ��е�num1
+-//    std::cout << constant::num1 << std::endl; // ���constant�����ռ��е�num1
+-//  
+-//
+-//    std::cin.get();
+-//    return 0;
+-//    
+-//}
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/qfmath.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/qfmath.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/qfmath.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/qfmath.cpp	
++++ /dev/null	
+@@ -1,10 +0,0 @@
+-#include <iostream>
+-
+-using namespace std;
+-
+-int getNumber(int index) {
+-	if (index == 1 || index == 2) {
+-		return 1;
+-	}
+-	return getNumber(index - 1) + getNumber(index - 2);
+-}
+\ No newline at end of file
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/06_运算符.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/06_运算符.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/06_运算符.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/06_运算符.cpp	
++++ /dev/null	
+@@ -1,93 +0,0 @@
+-//#include <iostream>
+-//
+-//int main()
+-//{
+-//    //���������
+-//    int a = 1;
+-//    int b = 2;
+-//    std::cout<<"a="<<a<<std::endl;
+-//    std::cout << "b="<<b<<std::endl;
+-//    std::cout << std::endl;
+-//    std::cout << "a+b="<<a + b << std::endl;
+-//    std::cout<<"a-b="<<a-b<<std::endl;
+-//    std::cout << "a*b="<<a * b << std::endl;
+-//    std::cout << "a/b="<<a / b << std::endl;
+-//    std::cout << "a%b="<<a % b << std::endl;
+-//    std::cout << "a++="<<a++ << std::endl;
+-//    std::cout << "a--="<<a-- << std::endl;
+-//    std::cout << "++a="<<++a << std::endl;
+-//    std::cout << "--a="<<--a << std::endl;
+-//    std::cout << std::endl;
+-//    //��ֵ�����
+-//    a = 1;
+-//    b = 2;
+-//    std::cout << "a="<<a << std::endl;
+-//    std::cout << "b="<<b << std::endl;
+-//    std::cout << "a+=b="<<(a += b) << std::endl;
+-//    std::cout << "a-=b="<<(a -= b) << std::endl;
+-//    std::cout << "a*=b="<<(a *= b) << std::endl;
+-//    std::cout << "a/=b="<<(a /= b) << std::endl;
+-//    std::cout << "a%=b="<<(a %= b) << std::endl;
+-//    std::cout << "a>b?a:b="<<(a > b ? a : b) << std::endl;
+-//  
+-//    std::cout << std::endl;
+-//   
+-//    //��ϵ�����
+-//    std::cout << "a==b="<<(a == b) << std::endl;
+-//    std::cout << "a!=b="<<(a != b) << std::endl;
+-//    std::cout << "a>b="<<(a > b) << std::endl;
+-//    std::cout << "a<b="<<(a < b) << std::endl;
+-//    std::cout << "a>=b="<<(a >= b) << std::endl;
+-//    std::cout << "a<=b="<<(a <= b) << std::endl;
+-//    std::cout << std::endl;
+-//
+-//    //�߼������
+-//    /*
+-//| &    | �����㣬���漴Ϊ�棬����һ��Ϊ�٣������Ϊ��   | true & false    |
+-//| |    | �����㣬���ټ�Ϊ�٣�����һ��Ϊ�棬�����Ϊ��   | true  | false   |
+-//| !    | �����㣬���漴�٣��Ǽټ���                   | !true           |
+-//| ^    | ������㣬��ͬΪ�٣���ͬΪ��                 | true ^ false    |
+-//| &&   | ��·�룬��ߵĽ��Ϊ�٣��ұߵı��ʽ���������� | false && true   |
+-//| ||   | ��·����ߵĽ��Ϊ�棬�ұߵı��ʽ���������� | true || false   |
+-//    
+-//    */
+-//    a = 0;
+-//    b = 1;
+-//    std::cout << "a="<<a << std::endl;
+-//    std::cout << "b="<<b << std::endl;
+-//    std::cout << "a&b="<<(a & b) << std::endl;
+-//    std::cout << "a|b="<<(a | b) << std::endl;
+-//    std::cout << "a^b="<<(a ^ b) << std::endl;
+-//    std::cout << "a&&b="<<(a && b) << std::endl;
+-//    std::cout << "a||b="<<(a || b) << std::endl;
+-//    std::cout << "!a="<<(!a) << std::endl;
+-//    std::cout << std::endl;
+-//    
+-//    //λ�����
+-//    /*
+-//| &    | λ������     | 10 & 20  |
+-//|  |   | λ������     | 10  | 20 |
+-//| ^    | λ�������   | 10 ^ 20  |
+-//| ~    | ��λȡ������ | ~10      |
+-//| <<   | λ��������   | 10 << 2  |
+-//| >>   | λ��������   | 10 >> 2  |
+-//    */
+-//    a = 0x0F;
+-//    b = 0xF0;
+-//    std::cout << "a="<<a << std::endl;
+-//    std::cout << "b="<<b << std::endl;
+-//    std::cout << "a&b="<<(a & b) << std::endl;
+-//    std::cout << "a|b="<<(a | b) << std::endl;
+-//    std::cout << "a^b="<<(a ^ b) << std::endl;
+-//    std::cout << "~a="<<(~a) << std::endl;
+-//    std::cout << "a<<1="<<(a << 1) << std::endl;
+-//    std::cout << "a>>1="<<(a >> 1) << std::endl;
+-//    std::cout << std::endl;
+-//    std::cin.get();
+-//
+-//
+-//    return 0;
+-//
+-//
+-//
+-//}
+\ No newline at end of file
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/03_数据类型的转换.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/03_数据类型的转换.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/03_数据类型的转换.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/03_数据类型的转换.cpp	
++++ /dev/null	
+@@ -1,45 +0,0 @@
+-//#include <iostream>
+-///*
+-//�������͵�ת�����Է�Ϊ����: �Զ�����ת��	ǿ������ת����
+-//    �Զ�����ת��:
+-//    ��ȡֵ��ΧС���������ͣ���ȡֵ��Χ�����������ת����
+-//    ת���Ĺ��̲���Ҫ���ж���Ĳ�����ֱ�Ӹ�ֵ�Ϳ����ˡ�
+-//    ��ת����ɺ󣬲�����ֵ�ľ��ȶ�ʧ�����
+-//
+-//    ǿ������ת��:
+-//    ��ȡֵ��Χ����������ͣ���ȡֵ��ΧС����������ת����
+-//    ת���Ĺ�������Ҫ����ǿ�Ƶ�����ת��������
+-//    ��ת����ɺ󣬿��ܻ���־��ȶ�ʧ�������
+-//*/
+-//namespace A {
+-//    //�Զ�����ת��
+-//    // 1. ����һ��short���͵ı���
+-//    short num1 = 10;
+-//    // 2. ת��Ϊint���͵ı���
+-//    //    ֱ�Ӹ�ֵ�������ת��
+-//    int num2 = num1;
+-//}
+-//namespace B {
+-//    //ǿ������ת��
+-//    // 1. ����һ��int���͵ı���
+-//   long double num1 = 200.364589;
+-//    // 2. ת��Ϊchar���͵ı���
+-//    //    ��Ҫ����ǿ������ת��������Ҫת�͵ı���֮ǰ���С���ţ�����д����Ҫת�͵����ͼ���
+-//    int  num2 = (int)num1;
+-//
+-//}
+-//int main()
+-//{  
+-//
+-//
+-//    std::cout << "Hello world!" << std::endl;
+-//    std::cout<<"�Զ�ת����"<<std::endl;
+-//    std::cout<<A::num1<<"\t"<<sizeof(A::num1) << std::endl;
+-//    std::cout<<A::num2<<"\t"<< sizeof(A::num2) << std::endl;
+-//    std::cout<<"ǿ��ת����"<<std::endl;
+-//    std::cout<<B::num1<<std::endl;
+-//    std::cout<<B::num2<<std::endl;
+-//    std::cout<<"��ʧ�ľ��ȣ�"<<(B::num1 - B::num2)<<std::endl;
+-//
+-//    return 0;
+-//}
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/02_转义字符.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/02_转义字符.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/02_转义字符.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/02_转义字符.cpp	
++++ /dev/null	
+@@ -1,73 +0,0 @@
+-//#include <iostream>
+-////ת���ַ�: \
+-////����1�����ĳЩ�����ַ�ʹ�ã�ʹ������ͨ�ַ�
+-////����2�����ĳЩ�ض�����ͨ�ַ�ʹ�ã�����ĳЩ���⺬��
+-///*
+-//	ת���ַ�			����									ASCII��ֵ��ʮ���ƣ�
+-//
+-//	\a				����(BEL)							007
+-//
+-//	\b				�˸�(BS) ������ǰλ���Ƶ�ǰһ��		008
+-//
+-//	\f				��ҳ(FF)������ǰλ���Ƶ���ҳ��ͷ		012
+-//
+-//	\n				����(LF) ������ǰλ���Ƶ���һ�п�ͷ	010
+-//
+-//	\r				�س�(CR) ������ǰλ���Ƶ����п�ͷ		013
+-//
+-//	\t				ˮƽ�Ʊ�(HT) ��������һ��TABλ�ã�		009
+-//
+-//	\v				��ֱ�Ʊ�(VT)							011
+-//
+-//	\\				����һ����б���ַ�''\'				092	
+-//
+-//	\'				����һ�������ţ�Ʋ�ţ��ַ�				039
+-//
+-//	\"				����һ��˫�����ַ�					034
+-//
+-//	\?				����һ���ʺ�							063
+-//
+-//	\0				���ַ�(NULL)	��־���ַ����Ľ���		000
+-//					����ַ�ʱ������ֿ��ַ������������
+-//
+-//	\ddd			1��3λ�˽�����������������ַ�		��λ�˽���
+-//
+-//	\xhh			1��2λʮ������������������ַ�		��λʮ������
+-//*/
+-//
+-///*
+-//\ddd �� \xhh ����ת���ַ������ڱ�ʾһ���ַ���
+-//	\ddd ��ʾ��1��3λ�˽���������ɵ��ַ�������� ddd ������1��3���˽������֣���Χ��0��7�����������������ʾASCII��Unicode�ַ����е�һ���ַ������磺
+-//
+-//	\101 ����ʮ�����е�65������д��ĸ 'A'��
+-//	\41 ͬ�������д��ĸ 'A'��
+-//
+-//	\xhh ��ʾ��1��2λʮ������������ɵ��ַ�������� hh ������1��2��ʮ���������֣���Χ��0��F�����������������ʾһ���ַ������磺
+-//
+-//	\x41 ����ʮ�������е�41������д��ĸ 'A'��
+-//	\xA ͬ�������д��ĸ 'A'��
+-//*/
+-//int main()
+-//{
+-//  printf("Hello World\a\n");
+-//  printf("Hello World\b\n");
+-//  printf("Hello World\f\n");
+-//  printf("Hello World\n\n");
+-//  printf("Hello World\r\n");
+-//  printf("Hello World\t\n");
+-//  printf("Hello World\\\n");
+-//  printf("Hello World\'\n");
+-//  printf("Hello World\"\n");
+-//  printf("Hello World\?\n");
+-//  printf("Hello World\0\n");
+-//  printf("Hello World\n");
+-//
+-//  printf("Hello World\101\n");
+-//  printf("Hello World\102\n");
+-//  printf("Hello World\103\n");
+-//
+-//  printf("Hello World\x07\n");
+-//  printf("Hel\x000loWorld\n");
+-//
+-//  return 0;
+-//}
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/01_各种类型变量的定义和使用方法.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/01_各种类型变量的定义和使用方法.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/01_各种类型变量的定义和使用方法.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/01_各种类型变量的定义和使用方法.cpp	
++++ /dev/null	
+@@ -1,155 +0,0 @@
+-//#include<iostream>
+-//using namespace std;
+-//
+-//void string_test0() {
+-///*string str�����ɿ��ַ���
+-//
+-//string s(str)�������ַ���Ϊstr�ĸ���Ʒ
+-//
+-//string s(str, strbegin, strlen)�����ַ���str�д��±�strbegin��ʼ������Ϊstrlen�Ĳ�����Ϊ�ַ�����ֵ
+-//
+-//string s(cstr, char_len)����C_string����cstr��ǰchar_len���ַ�����Ϊ�ַ���s�ĳ�ֵ
+-//
+-//string s(num, c)������num��c�ַ����ַ���
+-//
+-//string s(str, stridx)�����ַ���str�д��±�stridx��ʼ���ַ���������λ����Ϊ�ַ�����ֵ*/
+-//
+-//      
+-//    cout << "string�Ĺ��캯������ʽ��" << endl;
+-//    string str1;               //���ɿ��ַ���
+-//    string str2("123456789");  //����"1234456789"�ĸ���Ʒ
+-//    string str3("12345", 2, 3);//���Ϊ"123"
+-//    string str4("0123456", 5);  //�Ӹ��ַ����Ľ��Ϊ"01234"
+-//    string str5(5, '1');       //���Ϊ"11111"
+-//    string str6(str2, 5);      //��str2�ĵڶ����ַ������һ���ַ�,���Ϊ"3456789"
+-//
+-//    cout << "str1:" << str1 << endl;
+-//    cout << "str2:" << str2 << endl;
+-//    cout << "str3:" << str3 << endl;
+-//    cout << "str4:" << str4 << endl;
+-//    cout << "str5:" << str5 << endl;
+-//    cout << "str6:" << str6 << endl;
+-//}
+-//void string_test1() {
+-//
+-///*1. size()��length()������string������ַ�����������ִ��Ч����ͬ��
+-//
+-//2. max_size()������string�������������ַ������������׳�length_error�쳣
+-//
+-//3. capacity()�����·����ڴ�֮ǰ��string�����ܰ���������ַ���*/
+-//
+-//
+-//    cout << "string�Ĵ�С��������" << endl;
+-//    string s("1234567");
+-//    cout << "s:" << s << endl;
+-//    cout << "size=" << s.size() << endl;
+-//    cout << "length=" << s.length() << endl;
+-//    cout << "max_size=" << s.max_size() << endl;
+-//    cout << "capacity=" << s.capacity() << endl;
+-//    }
+-//void string_test2() {
+-//    cout << "string���ַ����Ƚϣ�" << endl;
+-//    
+-//    // (A��ASCII����65��a��ASCII����97)
+-//   // ǰ���ȥ�����ASCII�룬>0����1��<0����-1����ͬ����0
+-//    string A("aBcd");
+-//    string B("Abcd");
+-//    string C("123456");
+-//    string D("123dfg");
+-//
+-//    // "aBcd" �� "Abcd"�Ƚ�------ a > A
+-//    cout << "A.compare(B)��" << A.compare(B) << endl;                          // �����1
+-//
+-//    // "cd" �� "Abcd"�Ƚ�------- c > A
+-//    cout << "A.compare(2, 3, B):" << A.compare(2, 3, B) << endl;                // �����1
+-//
+-//    // "cd" �� "cd"�Ƚ� 
+-//    cout << "A.compare(2, 3, B, 2, 3):" << A.compare(2, 3, B, 2, 3) << endl;  // �����0
+-//
+-//
+-//    // �ɽ����������0��ʾ�±꣬3��ʾ����
+-//    // "123" �� "123"�Ƚ� 
+-//    cout << "C.compare(0, 3, D, 0, 3)" << C.compare(0, 3, D, 0, 3) << endl;    // �����0
+-//
+-//    
+-//}
+-//void string_test3() {
+-//    
+-//    cout << "string�Ĳ��룺" << endl;
+-//    string s1;
+-//    cout << "s1:" << s1 << endl; // s1:  ��ʼ״̬Ϊ��
+-//    
+-//    // β��һ���ַ�
+-//    s1.push_back('a');
+-//    s1.push_back('b');
+-//    s1.push_back('c');
+-//    cout << "s1:" << s1 << endl; // s1:abc
+-//    s1.pop_back();
+-//
+-//    cout << "s1:" << s1 << endl; // s1:ab
+-//    // insert(pos,char):���ƶ���λ��posǰ�����ַ�char
+-//    s1.insert(s1.begin(), '1');
+-//    cout << "s1:" << s1 << endl; // s1:1abc
+-//
+-//}
+-//void DataTypeConversion() {
+-//    //�Զ�ת��
+-//    //short a0 = 999;
+-//    int a0 = 999;
+-//    cout << "a0:" << a0 << endl;
+-//    cout << sizeof(a0) << endl;
+-//    
+-//    //int a1 = a0;
+-//    short a1 = a0;
+-//    cout << a1 << endl;
+-//
+-//    cout << sizeof(a1) << endl;
+-//
+-//    //ǿ��ת��
+-//
+-//    int b0 = 35;//#��ascii��ֵ
+-//    char b1 = char(b0);
+-//    cout << b1 << endl;;//#
+-//
+-//
+-//
+-//
+-//
+-//
+-//}
+-//int main() {
+-//    //// ����
+-//    //short num1 = 10;
+-//    //int num2 = 20;
+-//    //long num3 = 30;
+-//    //long long num4 = 40;
+-//
+-//    //// ������
+-//    //float num5 = 3.14f;		// float����������������ĺ������f
+-//    //double num6 = 3.14;
+-//
+-//    //// ������
+-//    //bool num7 = true;
+-//
+-//    //// �ַ���
+-//    //char num8_0 = 'a';		// �ַ���Ҫ������һ�Ե���������
+-//    //char num8_1 = num8_0+1;//Ҳ�������������ַ�����ʾ�ַ���ascii����е�λ��
+-//    //cout << "�ַ������ݲ��ԣ�" << endl;
+-//    //cout << "num8_0:\t\t\t" << num8_0<<endl<<"num8_0+1����num8_1��:" << num8_1 << endl;
+-//    //// �ַ�������
+-//    //string num9 = "hello";	// �ַ�����Ҫ������һ��˫��������
+-//
+-//    //cout << "num9:" << num9 << endl;
+-//    //cout << "num9[0]:" << num9[0] << endl << "num9[3]:" << num9[3] << endl;
+-//    //string_test0();
+-//    //string_test1();
+-//    //string_test2();
+-//    //string_test3();
+-//    DataTypeConversion();
+-//
+-//    cin.get();
+-//    return 0;
+-//
+-//
+-//
+-//}
+Index: ../QF_CPP/Basic_Grammar/00_hello_world/00_hello_world_in_oop.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/00_hello_world/00_hello_world_in_oop.cpp b/../QF_CPP/Basic_Grammar/00_hello_world/00_hello_world_in_oop.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/00_hello_world/00_hello_world_in_oop.cpp	
++++ /dev/null	
+@@ -1,20 +0,0 @@
+-
+-#include <iostream>
+-class HelloWorld
+-{
+-    public:
+-        void printHelloWorld()
+-        {
+-            std::cout << "Hello World in oop!\n";
+-        }
+-
+-
+-};
+-int main()
+-{
+-    HelloWorld hw;
+-    hw.printHelloWorld();
+-    return 0;
+-
+-    
+-}
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/00_各种数据类型所占字节数.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/00_各种数据类型所占字节数.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/00_各种数据类型所占字节数.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/00_各种数据类型所占字节数.cpp	
++++ /dev/null	
+@@ -1,48 +0,0 @@
+-//#include<iostream>
+-//#include<string.h>
+-//���ֱ�����ռ�ֽ�
+-//int main() {
+-//	std::cout << "��������������ռ�ֽ�(Byte)����" << std::endl;
+-//	//����
+-//	std::cout << "short��" << sizeof(short) << std::endl;
+-//	std::cout << "int��" << sizeof(int) << std::endl;
+-//	std::cout << "long��" << sizeof(long) << std::endl;
+-//	std::cout << "long long��" << sizeof(long long) << std::endl;
+-//	//������
+-//	std::cout << "float��" << sizeof(float) << std::endl;
+-//	std::cout << "double��" << sizeof(double) << std::endl;
+-//	std::cout << "long double��" << sizeof(long double) << std::endl;
+-//
+-//	//��������
+-//	std::cout << "bool��" << sizeof(bool) << std::endl;
+-//	
+-//	//�ַ���  //Ҳ���������ͣ���ʾ��������0~127
+-//	std::cout << "char��" << sizeof(char) << std::endl;
+-//	short a0 = 999;
+-//	std::cout << "sizeof(short(999))=" << sizeof(a0) << std::endl;
+-//	int  a1 = 999;
+-//	std::cout << "sizeof(int(999))=" << sizeof(a1) << std::endl;
+-//
+-//	long  a2 = 999;
+-//	std::cout << "sizeof(long(999))=" << sizeof(a2) << std::endl;
+-//
+-//	long  a3 = 999;
+-//	std::cout << "sizeof(long(999))=" << sizeof(a3) << std::endl;
+-//
+-//	long long a4 = 999;
+-//	std::cout << "sizeof(long long(999))=" << sizeof(a4) << std::endl;
+-//
+-//	/*������*/
+-//	//�ַ�����
+-//	//�ַ����ĳ���+1"syl��\0��"  
+-//	std::cout << "string��" <<std::endl<<"sizeof(syl)=" << sizeof("syl") << std::endl;//�ַ����ĳ���+1"string��\0��"
+-//	std::cout << "sizeof(\"123456\")=" << sizeof("123456") << std::endl;
+-//	std::cin.get();
+-//
+-//
+-//
+-//	return 0;
+-//
+-//
+-//}
+-//
+Index: ../QF_CPP/Basic_Grammar/02_oop00/OOP00.md
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/02_oop00/OOP00.md b/../QF_CPP/Basic_Grammar/02_oop00/OOP00.md
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/02_oop00/OOP00.md	
++++ /dev/null	
+@@ -1,151 +0,0 @@
+-# **OOP00**
+-
+-## �����������Ĵ���
+-### 1. ������
+-
+-�����ɸ�������ͬ����������Ϊ�Ķ����У���ȡ����Щ��ͬ����������Ϊ�����Ϊһ���ࡣ
+-
+-���ж������еĶ����е���������Ϊ�����У�������**����**��ʾ����Ϊ��**����**��ʾ��
+-
+-> ��ν���ԣ���ʵ���Ƕ��������е�һ��������
+-
+-```c++
+-// ���һ���࣬������
+-// ����: �������Ա�����
+-// ����: ��·���Է�
+-class Person {
+-public:
+-    string name;
+-    string gender;
+-    int age;
+-    
+-    void walk() {
+-        cout << "�������·" << endl;
+-    }
+-    void eat() {
+-        cout << "�����Է�" << endl;
+-    }
+-}
+-```
+-
+->   ע������:
+->
+->   �����ж�������ԡ�������Ĭ�϶���private��Ȩ�ޣ��������ǲ��ܷ��ʵġ������Ҫ��������ʣ���Ҫ�޸�ΪpublicȨ�ޡ�
+->
+->    // 
+->
+->   public: ������λ�ö����Է���
+->
+->   protected: �ڵ�ǰ��������п��Է���
+->
+->   private: ֻ���ڵ�ǰ���з���
+-
+-
+-### 2. ����Ĵ���
+-
+-```c++
+-int main() {
+-	// 1. ֱ�Ӵ���������ʽ����
+-    Person xiaobai;
+-
+-    // 2. ��ʽ����
+-    Person xiaobei = Person();
+-    
+-    // 3. �ؼ���new   
+-    Person* xiaowang = new Person();
+-    
+-    return 0;
+-}
+-```
+-
+-�����������ִ�����ʽ�У�ǰ���ַ�ʽ�����Ƶġ������ڴ��������ʱ��������Ҫ����û��ʹ�ùؼ���new��
+-
+-|            | ʹ��new                | û��ʹ��new    |
+-| ---------- | ---------------------- | -------------- |
+-| �ڴ淽��   | �ڶѿռ俪��           | ��ջ�ռ俪��   |
+-| �ڴ����   | ��Ҫ�ֶ�ʹ��delete���� | ����Ҫ�ֶ����� |
+-| ���Գ�ʼ�� | �Զ���Ĭ�ϵĳ�ʼֵ     | û�г�ʼֵ     |
+-| �﷨       | ��Ҫ����*�����ձ���    | ����Ҫʹ��*    |
+-| ��Ա����   | ͨ��.����              | ͨ��->����     |
+-
+-
+-### 3. ��Ա����
+-
+-��Ա���ʣ����������еĳ�Ա�����ԡ���������
+-
+-```c++
+-int main() {
+-    // ����Person����
+-    Person xiaobai;
+-    
+-    // �������е�����
+-    xiaobai.name = "xiao bai";
+-    xiaobai.age = 10;
+-    
+-    // �������еķ���
+-    xiaobai.walk();
+-    xiaobai.eat();
+-}
+-```
+-
+-```c++
+-int main() {
+-    // ʹ��new��������
+-    Person* xiaobai = new Person();
+-    
+-    // �������е�����
+-    xiaobai -> name = "xiao bai";
+-    xiaobai -> age = 1;
+-    
+-    // �������еķ���
+-    xiaobai -> walk();
+-    xiaobai -> eat();
+-}
+-```
+-
+-
+-### 4. ��ı���
+-��ı��ʣ���ʵ����һ���ṹ�塣
+-��C++�У�struct �� class ���﷨�Ϸǳ����ƣ�  
+-��Ҫ��������Ĭ�ϵķ��ʼ���ͬ��  
+-struct ��Ĭ�Ϸ��ʼ����� public���� class ��Ĭ�Ϸ��ʼ����� private��  
+-�����ҽ�����һ�� Person ���һ��ͬ���ܵ� PersonStruct �ṹ������ӣ����Ƕ�������һЩ��Ա�����ͳ�Ա������
+-
+-```c++
+-
+-class Person {
+-public:
+-    // ���캯��
+-    Person(const std::string& name, int age) : m_name(name), m_age(age) {}
+-
+-    // ��Ա����
+-    void printInfo() const {
+-        std::cout << "Name: " << m_name << ", Age: " << m_age << std::endl;
+-    }
+-
+-private:
+-    std::string m_name; // ����
+-    int m_age;          // ����
+-};
+-
+-```
+-
+-```c++
+-struct PersonStruct {
+-    // ���캯��
+-    PersonStruct(const std::string& name, int age) : m_name(name), m_age(age) {}
+-
+-    // ��Ա����
+-    void printInfo() const {
+-        std::cout << "Name: " << m_name << ", Age: " << m_age << std::endl;
+-    }
+-
+-private:
+-    std::string m_name; // ����
+-    int m_age;          // ����
+-};
+-```
+-
+-
+-
+-## ��ļ̳�
+\ No newline at end of file
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/07_流程控制.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/07_流程控制.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/07_流程控制.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/07_流程控制.cpp	
++++ /dev/null	
+@@ -1,419 +0,0 @@
+-//#include <iostream>
+-//#include <sstream>
+-//using namespace std;
+-//
+-////if���Ļ����﷨
+-//void if_test00() {
+-////�����ֳ���������
+-//
+-//    int a = 10;
+-//    if (a > 10) {
+-//        std::cout << "a > 10" << std::endl;
+-//    } else {
+-//        std::cout << "a <= 10" << std::endl;
+-//    }
+-//}
+-////if���ֶ�
+-//void if_test01() {
+-////if() {}
+-//// else if() {}
+-//// else if() {}
+-//// else{}
+-////��Ϊ�������֣�1.�ж�������2.�ж���������ʱ��ִ�е���䣬3.�ж�����������ʱ��ִ�е����
+-//    int a = 10;
+-//    if (a > 10) {
+-//        std::cout << "a > 10" << std::endl;
+-//    }
+-//    else if (a == 10) {
+-//        std::cout << "a == 10" << std::endl;
+-//    }
+-//    else {
+-//        std::cout << "a < 10" << std::endl;
+-//    }
+-//}
+-////
+-//void if_test02() {
+-//// ע�����
+-////		������if����else������Ĵ���������� ����ֻ�� һ����� ������£���ʱ�Ĵ������ǿ���ʡ�Բ�д�ģ�
+-////		���ǣ�ʵ������£������ڽ��г��򿪷���ʱ������Ĵ�����һ�㲻ʡ�ԣ�����
+-////		��Ϊ���ʡ���˴����ţ���Գ���Ŀɶ������һ��Ӱ�죬Ҳ���׳���BUG������
+-//    int a = 10;
+-//    if (a > 10) 
+-//        std::cout << "a > 10" << std::endl;
+-//    
+-//    else if (a == 10) 
+-//        std::cout << "a == 10" << std::endl;
+-//    
+-//    else 
+-//        std::cout << "a < 10" << std::endl;
+-//    
+-//}
+-////ifǶ��
+-//void if_test03() {
+-//
+-//    cout<<"ifǶ�����ӣ�"<<endl;
+-//    cout<<"��ҵ���ŵĽ������������ɡ�"<<"����(I)���ڻ����10��Ԫʱ���������10%��"<<"�������10��Ԫ������20��Ԫʱ������10��Ԫ�Ĳ��ְ�10%��ɣ�����10��Ԫ�Ĳ��֣������7.5%��20��40��֮��ʱ������20��Ԫ�Ĳ��֣������5%��40��60��֮��ʱ����40��Ԫ�Ĳ��֣������3%��60��100��֮��ʱ������60��Ԫ�Ĳ��֣������1.5%������100��Ԫʱ������100��Ԫ�Ĳ��ְ�1%��ɣ��Ӽ������뵱������I����Ӧ���Ž���������"<<endl;
+-//        float I;
+-//    float bonus;
+-//
+-//    cin>>I;
+-//
+-//    bonus = 0;
+-//    if (I > 100)
+-//    {
+-//        bonus = (I - 100) / 100 + 3.95;
+-//    }
+-//    else
+-//    {
+-//        if (I > 60)
+-//        {
+-//            bonus = (I - 60) * 0.015 + 3.35;
+-//        }
+-//        else
+-//        {
+-//            if (I > 40)
+-//            {
+-//                bonus = (I - 40) * 0.03 + 2.75;
+-//            }
+-//            else
+-//            {
+-//                if (I > 20)
+-//                {
+-//                    bonus = (I - 20) * 0.05 + 1.75;
+-//                }
+-//                else
+-//                {
+-//                    if (I > 10)
+-//                    {
+-//                        bonus = (I - 10) * 0.075 + 1;
+-//                    }
+-//                    else
+-//                    {
+-//                        bonus = 0.1 * I;
+-//                    }
+-//                }
+-//            }
+-//        }
+-//    }
+-//    cout<<"����"<<bonus<<endl;
+-//    cin.get();
+-//  
+-//
+-//  
+-//
+-//
+-//}
+-////switch���Ļ����﷨
+-//void switch_test00() {
+-//    //switch���Ļ����÷�����if�ֶ����ƣ���
+-//    //switch(���ʽ)
+-//    //{
+-//    //	case �������ʽ1��
+-//    //		���1;
+-//    //		break;
+-//    //	case �������ʽ2��
+-//    //		���2;
+-//    //		break;
+-//    //	case �������ʽ3��
+-//    //		���3;
+-//    //		break;
+-//    //	default:
+-//    //		���4;
+-//    //		break;
+-//    //}
+-//
+-//    int season = 0;
+-//    cout << "������һ�����ڣ�1-4����";
+-//    cin >> season;
+-//
+-//    switch (season) {
+-//    case 1:
+-//        cout << "��ů����" << endl;
+-//        break;
+-//    case 2:
+-//        cout << "����" << endl;
+-//        break;
+-//    case 3:
+-//        cout << "�����ˬ" << endl;
+-//        break;
+-//    case 4:
+-//        cout << "��ˮ�ɱ�" << endl;
+-//        break;
+-//    default:
+-//        cout << "����ļ���" << endl;
+-//        break;
+-//    }
+-//}
+-//
+-////switch��͸
+-//void switch_test01() {
+-//    // ָ���ǣ���switch�ı�����ĳһ��caseֵƥ����֮��
+-//    // ��������������case����default��ƥ�䣬ֱ�����͸��
+-//
+-//    //eg:�ж�һ�������ǵ���ĵڼ��죿
+-//    int year = 0, month = 0, day = 0;
+-//    cout << "������һ����: ";
+-//    cin >> year;
+-//    cout << "������һ����: ";
+-//    cin >> month;
+-//    cout << "������һ����: ";
+-//    cin >> day;
+-//
+-//    // ����һ��������������¼�ܵ�����
+-//    int days = day;
+-//
+-//    // 1: 
+-//    // 2: 1(31)
+-//    // 3: 1(31) + 2(28)
+-//    // 4: 1(31) + 2(28) + 3(31)
+-//    // ...
+-//    // 11: 1(31) + 2(28) + 3(31) + 4(30) ... + 10(31)
+-//    // 12: 1(31) + 2(28) + 3(31) + 4(30) ... + 10(31) + 11(30)
+-//
+-//    switch (month) {
+-//    case 12:
+-//        days += 30;
+-//    case 11:
+-//        days += 31;
+-//    case 10:
+-//        days += 30;
+-//    case 9:
+-//        days += 31;
+-//    case 8:
+-//        days += 31;
+-//    case 7:
+-//        days += 30;
+-//    case 6:
+-//        days += 31;
+-//    case 5:
+-//        days += 30;
+-//    case 4:
+-//        days += 31;
+-//    case 3:
+-//        days += (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) ? 29 : 28;
+-//    case 2:
+-//        days += 31;
+-//    default:
+-//        break;
+-//    }
+-//
+-//    cout << year << "��" << month << "��" << day << "����" << year << "��ĵ�" << days << "��" << endl;
+-//
+-//
+-//
+-//}
+-//
+-//
+-//void while_test00 (){
+-//    //ѭ����ӡ10��hello world
+-//    cout<<"while�������﷨��"<<endl;
+-//    int count = 0;
+-//    while (count < 10) {
+-//        cout << count<<" hello world" << endl;
+-//        count++;
+-//    }
+-//
+-//}
+-//void while_test01 (){
+-//     //��100���ڵ�ż���ĺ�
+-//     int result = 0;
+-//     int number = 1;
+-//     while (number <= 100) {
+-//     	if (number % 2 == 0) {
+-//     		result += number;
+-//     	}
+-//     	number++;
+-//     }
+-//     cout << result << endl;
+-//}
+-//
+-//void while_test02 (){
+-//    // ��Ҫ�ڿ���̨������һ�����͵����֣�����û��ڿ���̨������Ĳ���ȷ�����û��ظ����룬ֱ��������ȷΪֹ��
+-//    int number = 0;
+-//
+-//    cout << "������һ�����͵�����: ";
+-//    cin >> number;
+-//    while (cin.fail()) {
+-//        cout << "���������������: ";
+-//        cin.clear();
+-//        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+-//        cin >> number;
+-//    }
+-//    cout << "number = " << number << endl;
+-//
+-//}
+-//void do_while_test00 (){
+-//    //do...while���
+-//    //do�����е��������ִ��һ�Σ���while�����е������ܲ�ִ�С�
+-//    //do�����е��������ִ��һ�Σ���while�����е������ܲ�ִ�С�
+-//    int count = 0;
+-//    do {
+-//        cout << count << " hello world" << endl;
+-//        count++;
+-//    } while (count < 10);
+-//
+-//}
+-//void for_test00() {
+-//    //��10�Ľ׳�
+-//    cout << "��10�Ľ׳�" << endl;
+-//    long long result = 1;
+-//    for (int i = 1; i <= 10; i++) {
+-//        result *= i;
+-//    }
+-//    cout << result << endl;
+-//
+-//}
+-//void for_test01() {
+-//    //��100����ż���ĺ�
+-//    cout << "��100����ż���ĺ�" << endl;
+-//    int result = 0;
+-//    for (int i = 2; i <= 100; i += 2) {
+-//        result += i;
+-//    }
+-//    cout << result << endl;
+-//
+-//}
+-//void for_test02() {
+-//    int count3 = 0, count5 = 0, count35 = 0;
+-//    // ���������������ֱ�����ͳ���ܹ���3���������֡��ܹ���5���������֡��ܹ�ͬʱ��3��5����������
+-//    ostringstream oss3, oss5, oss35;
+-//
+-//    for (int i = 1; i <= 100; i++) {
+-//        if (i % 3 == 0 && i % 5 == 0) {
+-//            count35++;
+-//            oss35 << i << ", ";
+-//        }
+-//        else if (i % 3 == 0) {
+-//            count3++;
+-//            oss3 << i << ", ";
+-//        }
+-//        else if (i % 5 == 0) {
+-//            count5++;
+-//            oss5 << i << ", ";
+-//        }
+-//    }
+-//    cout << "�ܹ���3���������ǲ��ܱ�5���������ָ���: " << count3 << endl;
+-//    cout << "���Ƿֱ���: " << oss3.str() << endl;
+-//
+-//    cout << "�ܹ���5���������ǲ��ܱ�3���������ָ���: " << count5 << endl;
+-//    cout << "���Ƿֱ���: " << oss5.str() << endl;
+-//
+-//    cout << "�ܹ�ͬʱ��3��5���������ָ���: " << count35 << endl;
+-//    cout << "���Ƿֱ���: " << oss35.str() << endl;
+-//
+-//}
+-//void for_test03() {
+-//    // for�������﷨:
+-//    // forѭ����С�����е�ÿһ�����ֶ�����ʡ�Բ�д��
+-//    // ʡ�Գ�ʼ������: ���԰�ѭ�����Ʊ�����������ѭ�������
+-//    // ʡ�������жϲ���: Ĭ����������Զ������
+-//    // ʡ�Ե�������: ���԰Ѷ�ѭ�����Ʊ������޸ķ���ѭ��������
+-//
+-//    // ע������: ��Ȼÿһ���ֶ�����ʡ�Բ�д�����Ƿֺ��ǲ���ʡ�Եġ�
+-//    
+-//    int i=0;
+-//    //��ѭ��
+-//    for (;i<100;) {
+-//        cout << i << endl;
+-//        i++;
+-//    }
+-//    
+-//}
+-//void break_test() {
+-//    // break: ����ѭ���У���ʾ��������ѭ�������������Ƿ����
+-//    //        �������Ƕ�׵�ѭ���У�ֻ�ܽ�����ǰ��һ���ѭ��
+-//
+-//
+-//    for (int i = 1; i <= 100; i++) {
+-//        if (i == 55) {
+-//            break;
+-//        }
+-//        cout << i << endl;
+-//    }
+-//}
+-//
+-//void continue_test() {
+-//    // continue: ����ѭ���У���ʾ��������ѭ��
+-//    //        �������Ƕ�׵�ѭ���У�ֻ�ܽ�����ǰ��һ���ѭ��
+-//    for (int i = 1; i <=100; i++) {
+-//        if (i %10==0) {
+-//            continue;	// �����￪ʼ��ѭ������֮��Ĵ��벻��ִ�У�����ִ�е������ֵĴ��룬�����ж�ѭ�������Ƿ����
+-//        }
+-//        cout << i << endl;
+-//    }
+-//}
+-//
+-//void goto_test() {
+-//    // goto��䣺
+-//    // 1. goto���ֻ����ת��һ����ǩ��������ת�������ǩ
+-//
+-//    cout<<"goto��䣺"<<endl;
+-//        label1:
+-//            cout << 1 << endl;
+-//            goto label3;
+-//
+-//        label2:
+-//            cout << 2 << endl;
+-//            goto label5;
+-//
+-//        label3:
+-//            cout << 3 << endl;
+-//
+-//        label4:
+-//            cout << 4 << endl;
+-//            goto label2;
+-//
+-//        //goto������ѭ��
+-//        label4_5:
+-//            for (int i = 1; i <= 100; i++) {
+-//                if (i % 10) {
+-//                    continue;	// �����￪ʼ��ѭ������֮��Ĵ��벻��ִ�У�����ִ�е������ֵĴ��룬�����ж�ѭ�������Ƿ����
+-//                }
+-//                cout << i << endl;
+-//            }
+-//            goto label4_5;
+-//
+-//        label5:
+-//            cout << "end" << endl;
+-//            goto label4_5;
+-//
+-//}
+-//void multiple_loops_test(){
+-//    //ѭ����Ƕ��
+-//    //��ӡ�žų˷���
+-//   
+-//    for (int line = 1; line <= 9; line++) {
+-//        for (int column = 1; column <= line; column++) {
+-//            cout << column << " x " << line << " = " << (column * line) << "\t";
+-//        }
+-//        cout << endl;
+-//    }
+-//
+-//}
+-//int main(){
+-//    /*if_test00();
+-//    if_test01();
+-//    if_test02();*/
+-//    //if_test03();
+-//    /*
+-//    switch_test00();
+-//    switch_test01();*/
+-//   /* while_test00();
+-//    while_test01();
+-//    while_test02();*/
+-//
+-//   // do_while_test00();
+-//    /*for_test00();
+-//    for_test01();
+-//    for_test02();
+-//    for_test03();
+-//    */
+-//
+-//    //break_test();
+-//    //continue_test();
+-//
+-//    //goto_test();
+-//    multiple_loops_test();
+-//    cin.get();
+-//    return 0;
+-//}
+\ No newline at end of file
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/04_控制台输入.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/04_控制台输入.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/04_控制台输入.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/04_控制台输入.cpp	
++++ /dev/null	
+@@ -1,115 +0,0 @@
+-//#include <iostream>
+-//#include <string>
+-//using namespace std;
+-//int main()
+-//{
+-//	/*
+-//	//�򵥵ĸ������͵�����
+-//	int a0;
+-//	cout<<"������һ��������";
+-//	cin >> a0;
+-//	cout << "�����ֵΪ��" << a0<<endl;
+-//
+-//	float a1;
+-//	cout<<"������һ����������";
+-//	cin >> a1;
+-//	cout << "�����ֵΪ��" << a1 << endl;
+-//
+-//	char a2;
+-//	cout<<"������һ���ַ���";
+-//	cin >> a2;
+-//	cout << "�����ֵΪ��" << a2 << endl;
+-//
+-//	string a3;
+-//	cout<<"������һ���ַ�����";
+-//	cin >> a3;
+-//	cout << "�����ֵΪ��" << a3 << endl;;
+-//
+-//	bool a4;
+-//	cout<<"������һ������ֵ��";
+-//	cin >> a4;
+-//	cout << "�����ֵΪ��" << a4 << endl;
+-//	*/
+-//	//����������
+-//	//int a5;
+-//	//cout << "������һ��������";
+-//	//cin.operator>>(a5);//��cin>>a5Ч����ͬ
+-//	//cout << "�����ֵΪ��" << a5 << endl;
+-//
+-//	//string input0;
+-//	//string input1;
+-//	//cout << "�������һ���ַ�����";
+-//	//cin >> skipws >> input0;//�ո���ǽ�����
+-//	//cout << "�����ֵΪ��" << input0 << endl;
+-//
+-//
+-//	//cout << "������ڶ����ַ�����";
+-//	//cin >> noskipws >> input1;//�������ո�
+-//	//cout << "�����ֵΪ��" << input1 << endl;
+-//
+-//	//char a;
+-//	//int b;
+-//	//float c;
+-//	//string str;
+-//	//cin >> a >> b >> c >> str;
+-//	//cout << a << " " << b << " " << c << " " << str << endl;
+-//
+-//
+-//	/*
+-//		��ȡ�����ַ�
+-//		cin.get();
+-//		cin.get(a);
+-//		���ܺ��Կո�
+-//	*/
+-//	//char a;
+-//	//char b;
+-//	//char c;
+-//	///*a = cin.get();
+-//	//cin.get(b);
+-//	//cin.get(c);*/
+-//	//cin >> a >> b >> c;
+-//	//cout << a<<" " << b<<" " << c<<" end" << endl;
+-//
+-//
+-//	/*
+-//		��ȡһ���ַ�
+-//		cin.get(a,20);
+-//		��ȡ���19���ַ����ַ����� a �У���20��λ�ý������ڴ洢 null ��ֹ����\0��
+-//		cin.getline(a,20);
+-//		Ĭ�Ϻ��Կհ��ַ���ֱ���������з���ﵽָ�����ַ�����(�ַ�����ָ��)��
+-//		cin.getline(array,20,'\n');
+-//
+-//		���ܺ��Կո�
+-//	*/
+-//	//char a;
+-//	//char array[20] = { NULL };
+-//	//char b[20]= { NULL };
+-//	////cin.get(array, 20);
+-//	//cout << "cin.get()=" << array << endl;
+-//	//cin.clear();
+-//	////cin.get(a);
+-//	//cin.getline(b, 20);
+-//	//cout << "cin.getline()=" << b << endl;
+-//
+-//	//cout << int(b[19])<<" " << int(b[20]);
+-//	//cin.get();
+-//
+-//	
+-//
+-//
+-//
+-//	//char array[20] = { NULL };
+-//	//cin.getline(array, 20); //����ָ����������ʹ������һ��
+-//	////cin.getline(array,20,'\n');
+-//	//cout << array << endl;
+-//
+-//
+-//
+-//
+-//
+-//
+-//
+-//
+-//	return 0;
+-//
+-//}
+Index: cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-cc40587a5dd022df3d53.json
+===================================================================
+diff --git a/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-cc40587a5dd022df3d53.json b/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-cc40587a5dd022df3d53.json
+deleted file mode 100644
+--- a/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-cc40587a5dd022df3d53.json	
++++ /dev/null	
+@@ -1,165 +0,0 @@
+-{
+-	"inputs" : 
+-	[
+-		{
+-			"path" : "CMakeLists.txt"
+-		},
+-		{
+-			"isGenerated" : true,
+-			"path" : "cmake-build-debug/CMakeFiles/3.28.1/CMakeSystem.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake"
+-		},
+-		{
+-			"isGenerated" : true,
+-			"path" : "cmake-build-debug/CMakeFiles/3.28.1/CMakeCCompiler.cmake"
+-		},
+-		{
+-			"isGenerated" : true,
+-			"path" : "cmake-build-debug/CMakeFiles/3.28.1/CMakeCXXCompiler.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU.cmake"
+-		},
+-		{
+-			"isGenerated" : true,
+-			"path" : "cmake-build-debug/CMakeFiles/3.28.1/CMakeRCCompiler.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeRCInformation.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-windres.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C-ABI.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-CXX.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-CXX-ABI.cmake"
+-		},
+-		{
+-			"isCMake" : true,
+-			"isExternal" : true,
+-			"path" : "D:/JetBrains/Clion/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake"
+-		}
+-	],
+-	"kind" : "cmakeFiles",
+-	"paths" : 
+-	{
+-		"build" : "H:/MyProjects/C-C++/BasicGrammarOfCpp/Object_Oriented/cmake-build-debug",
+-		"source" : "H:/MyProjects/C-C++/BasicGrammarOfCpp/Object_Oriented"
+-	},
+-	"version" : 
+-	{
+-		"major" : 1,
+-		"minor" : 0
+-	}
+-}
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/08_函数.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/08_函数.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/08_函数.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/08_函数.cpp	
++++ /dev/null	
+@@ -1,138 +0,0 @@
+-//#include <iostream>
+-//#include"qfmath.h"
+-//using namespace std;
+-//
+-//
+-//// ������һ�����������з�װ��һ���ֹ���: ��ӡ�žų˷���
+-//void printNineNineTable() {
+-//	for (int line = 1; line <= 9; line++) {
+-//		for (int column = 1; column <= line; column++) {
+-//			cout << line << " x " << column << " = " << (column * line) << "\t";
+-//		}
+-//		cout << endl;
+-//	}
+-//}
+-//
+-//// �βΣ��β��Ǻ�������ʱ������Ĳ�������������ʱ�����ݸ������Ĳ���
+-//void add00(int num1, int num2) {
+-//	cout << "num1 = " << num1 << ", num2 = " << num2 << ", num1 + num2 = " << (num1 + num2) << endl;
+-//}
+-//
+-////�����η����β�
+-////const���η��������β�num1����ʾnum1��ֵ���ܱ��޸�
+-//void cal(const int num1, int num2) {
+-//cout << "num1 = " << num1 << ", num2 = " << num2 << ", num1 + num2 = " << (num1 + num2) << endl;
+-//
+-//}
+-//
+-//
+-////������ֵ�ĺ���
+-////����ֵ���ͣ���������ʱ������ķ���ֵ���ͣ���������ʱ������ֵ���ͺͺ�������ʱһ��
+-//int abs(int number) {
+-//	return number > 0 ? number : -number;
+-//}
+-//
+-//void return_test() {
+-//	/*
+-//	1.   �ڷ���ֵ���Ͳ���void�ĺ����У�����ִ�н���֮ǰ������Ҫʹ��return��ȷ�ķ���һ�������
+-//	2.   �ڷ���ֵ������void�ĺ����У���Ȼ����ʹ��return�ؼ��֣���ʱ����ʾ����������ִ�С�
+-//	*/
+-//
+-//	//��ӡ��50��ǿ���˳�
+-//	int number = 1;
+-//	while (true) {
+-//
+-//		cout << number << endl;
+-//
+-//		number++;
+-//		if (number > 50) {
+-//
+-//			return;
+-//
+-//		}
+-//	}
+-//}
+-//
+-////��Ĭ��ֵ�ĺ���
+-////Ĭ�ϲ���ֻ�ܷ������
+-//int add01(int num1, int num2 = 100) {
+-//	return num1 + num2;
+-//}
+-//float add02(float num1=56.333, float num2 = 100.999) {
+-//
+-//	cout << "num1 = " << num1 << ", num2 = " << num2 << endl;
+-//	return num1 + num2;
+-//}
+-//
+-////��������
+-////�������أ���������ͬ�������б�ͬ
+-//int myadd(int num1=0, int num2=0) {
+-//	return num1 + num2;
+-//	
+-//}
+-//float myadd(int num1, float num2) {
+-//	return num1 + num2;
+-//}
+-//
+-//double myadd(double num1, float num2=666) {
+-//	return num1 + num2;
+-//	
+-//}
+-//
+-//
+-////�ݹ麯��
+-//// �ݹ麯�������������Լ�����
+-//
+-//// �ݹ麯����ȱ�㣺
+-//// 1. �ݹ麯���ĵ�����ȿ��ܴﵽһ���̶ȣ��ͻᵼ��ջ���
+-//// 2. �ݹ麯����Ч�ʱȽϵ�
+-//
+-//// �ݹ麯�����ŵ㣺
+-//// 1. �ݹ麯���Ĵ���ṹ�Ƚ�����
+-//// 2. �ݹ麯����Ч�ʱȽϸ�
+-//int multiply(int number) {
+-//	if (number == 1) {
+-//		return 1;
+-//	}
+-//	return number * multiply(number - 1);
+-//}
+-//
+-//// ����һ��������
+-//int main() {
+-//
+-//	//// �����ں����еĴ��룬Ĭ���ǲ���ִ�е�
+-//	//// �����Ҫִ�к����еĴ��룬������Ҫ�����á�����
+-//	//printNineNineTable();
+-//
+-//	//cout << "============" << endl;
+-//
+-//	//printNineNineTable();
+-//	/*add(10, 20);
+-//	cal(56,44);
+-//	cout << "abs(-100) = " << abs(-100) << endl;
+-//	cout << "abs(-45879) = " << abs(100) << endl;*/
+-//	//return_test();
+-//	/*cout << "add01(10) = " << add01(10) << endl;
+-//	cout << "add01(10, 20) = " << add01(10, 20) << endl;
+-//	cout << "add02(10.5, 20.5) = " << add02(10.5, 20.5) << endl;
+-//	cout << "add02(10.5) = " << add02(10.5) << endl;
+-//	cout << "add02() = " << add02() << endl;*/
+-//	
+-//
+-//
+-//	//printf("myadd(10,20)=%d\n", myadd(10, 20));
+-//	//printf("myadd(10.5,20.5)=%f\n", myadd(10.5, 20.5));
+-//	//printf("myadd(10.5)=%f\n", myadd(10.5625));
+-//	//printf("myadd()=%f\n", myadd());
+-//
+-//	//printf("3!=%d\n", multiply(3));
+-//	for (int index = 1; index <= 100; index++)
+-//	{
+-//		cout << getNumber(index) << endl;
+-//	}
+-//
+-//
+-//
+-//	cin.get();
+-//	return 0;
+-//}
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/10_数组.cpp
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/10_数组.cpp b/../QF_CPP/Basic_Grammar/01_basic_things/10_数组.cpp
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/10_数组.cpp	
++++ /dev/null	
+@@ -1,163 +0,0 @@
+-#include <iostream>
+-
+-using namespace std;
+-
+-void ���鶨��() {
+-    // ���飺����Ķ���
+-  // �������� ��ʶ��[];
+-
+-  // 1������ָ�����ȵ����飬��ʱ�����е�Ԫ���ǲ���ȫ�ġ�
+-   static int array1[10];
+-   cout <<"array1=" << array1 << endl;
+-   cout<<"*array1="<<*array1 << endl;
+-
+-  // 2�����������ͬʱ�����������г�ʼ������Ԫ�ء�
+-   int array2[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };     // ������һ������Ϊ10�����飬���д洢��Ԫ�طֱ���1��2��3��4��5��6��7��8��9��10
+-   cout<<"array2=" << array2 << endl;
+-   cout <<"*array2=" << *array2 << endl;
+-   int array3[10] = { 1, 2, 3, 4, 5 };     // ������һ������Ϊ10�����飬��������Ԫ����1��2��3��4��5�������Ԫ�ض���Ĭ��ֵ0
+-   cout <<"array3=" << array3 << endl;
+-    cout <<"*array3=" << *array3 << endl;
+-  // 3������һ�����飬ֱ��ָ����ʼ����Ԫ�أ���ȥָ�����ȣ���ʱ����ĳ������ɳ�ʼ������Ԫ�ص�����������
+-   int array4[] = { 1, 2, 3, 4, 5 };   // ������һ�����飬����Ԫ����1��2��3��4��5����ʱ����ĳ�����5
+-    cout <<"array4=" << array4 << endl;
+-    cout <<"*array4=" << *array4 << endl;
+-
+-
+-  
+-
+-}
+-void �������() {
+-    cout << "��������±������" << endl;
+-    int array[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+-
+-    // ���㳤��
+-    int len = sizeof(array) / sizeof(int);
+-
+-    for (int i = 0; i < len; i++) {
+-        cout << array[i] << endl;
+-    }
+-    cout << "���鷶Χ������" << endl;
+-    int arr[10] = { 1, 2, 3, 4, 5 ,6,7,8,9,10};
+-
+-    for (int ele : arr) {
+-        cout << ele << endl;
+-    }
+-
+-   
+-
+-   
+-}
+-void �����ڴ����() {
+-    cout << "�����ڴ����" << endl;
+-    int array[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+-    for (int i = 0; i < 10; i++) {
+-        cout << array[i] <<"\t�ĵ�ַ��"<< & array[i] << endl;
+-    }
+-}
+-void ǳ���������() {
+-
+-     //ǳ������Ҳ���ǵ�ַ�����������������������Ԫ�ص�ַ��
+-     //���������һ���µ����飬������ԭ����������ͬ����ԭ�������е�ÿһ��Ԫ�����ο������µ������С�
+-    cout << "ǳ���������" << endl;
+-    // ����һ����Ҫ����������
+-    int array[] = { 1, 2, 3, 4, 5 };
+-    cout << "ԭʼ���飺" << endl;
+-    for (int i = 0; i < 5; i++) {
+-        cout << array[i] << endl;
+-    }
+-    cout<<"ԭʼ����ĵ�ַ��"<<&array << endl;
+-    // ǳ��������ַ����
+-   
+-    cout << "ǳ������" << endl;
+-    int* array_copy_1 = array;
+-    cout << "ǳ�����ĵ�ַ��" << array_copy_1 << endl;
+-    for (int i = 0; i < 5; i++) {
+-        cout << array_copy_1[i] << endl;
+-    }
+-
+-    
+-    cout << "�����" << endl;
+-    // ���������һ���µĵȳ������飬����Ԫ�����ο�������
+-    int array_copy_deep[5];
+-    cout<<"�����ַ��"<<&array_copy_deep<<endl;
+-    for (int i = 0; i < 5; i++) {
+-        array_copy_deep[i] = array[i];
+-    }
+-    for (int i = 0; i < 5; i++) {
+-        cout << array_copy_deep[i] << endl;
+-    }
+-
+-
+-}
+-
+-void ��ά����() {
+-    cout<<"��ά���飺"<<endl;
+-    // �����ά����:
+-     // �������� ��ʶ��[����][����];
+-    int array1[3][5];
+-
+-    // �������� ��ʶ��[����][����] = { {val1, val2, val3}, {val1, val2, val3} };
+-    int array2[3][5] = {
+-            {1, 2, 3, 4, 5},
+-            {2, 2, 3, 3, 3},
+-            {3, 2, 1, 4, 5}
+-    };
+-    for (int i = 0; i < 3; i++) {
+-        for (int j = 0; j < 5; j++) {
+-            cout << array2[i][j] << " ";
+-        }
+-        cout << endl;
+-    }
+-    cout << endl;
+-
+-    // �������� ��ʶ��[����][����] = { val1, val2, val3, val4 };
+-    // ��ʱϵͳ�Ὣ��ЩԪ���У�ÿ5��Ԫ����ϵ�һ��
+-    // ���ʣ�ൽ����5����Ԫ�أ���0�չ�5λƴ��һ������
+-    int array3[3][5] = { 1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100, 200 };
+-   /* for (int i = 0; i < 3; i++) {
+-        for (int j = 0; j < 5; j++) {
+-            cout << array3[i][j] << " ";
+-        }
+-        cout << endl;
+-    }*/
+-    for (int* p : array3) {
+-        for (int p2 = 0; p2 < 5;p2++ ) {
+-            cout << *(p+p2) << " ";
+-        }
+-        cout << endl;
+-    }
+-    cout << endl;
+-
+-    // �������� ��ʶ��[][����] = { val1, val2, val3, ... }
+-    int array4[][5] = { 1, 2, 3, 4, 5, 2, 2, 3, 4, 5, 1 };
+-   /* for (int i = 0;; i++) {
+-        for (int j = 0; j < 5; j++) {
+-            cout << array4[i][j] << " ";
+-            if(array4[i][j] ==0)
+-                return;
+-        }
+-        cout << endl;
+-    }*/
+-    for (int* i : array4) {
+-        for (int j = 0; j < 5; j++) {
+-            cout << *(i + j) << " ";
+-        }
+-        cout<<endl;
+-    }
+-
+-
+-
+-
+-}
+-int main() {
+-    //���鶨��();
+-    //�������();
+-    //�����ڴ����();
+-    //ǳ���������();
+-    ��ά����();
+-    cin.get();
+-   
+-  
+-    return 0;
+-}
+\ No newline at end of file
+Index: ../QF_CPP/Basic_Grammar/01_basic_things/qfmath.h
+===================================================================
+diff --git a/../QF_CPP/Basic_Grammar/01_basic_things/qfmath.h b/../QF_CPP/Basic_Grammar/01_basic_things/qfmath.h
+deleted file mode 100644
+--- a/../QF_CPP/Basic_Grammar/01_basic_things/qfmath.h	
++++ /dev/null	
+@@ -1,5 +0,0 @@
+-#pragma once
+-
+-// ͷ�ļ���ֻ������������ʵ��
+-
+-int getNumber(int index);
+\ No newline at end of file
+Index: 01_BasicGrammar/Basic/Person.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/01_BasicGrammar/Basic/Person.h b/01_BasicGrammar/Basic/Person.h
+new file mode 100644
+--- /dev/null	
++++ b/01_BasicGrammar/Basic/Person.h	
+@@ -0,0 +1,37 @@
++//
++// Created by main on 2024/7/14.
++//
++
++#ifndef PERSON_H
++#define PERSON_H
++#include<string>
++#include <iostream>
++using namespace std;
++
++class Person {
++public:
++    string name;
++    string gender;
++    int age;
++
++    void walk() ;
++    void eat() ;
++    void sleep() ;
++};
++//类外实现类函数
++//当类外实现类函数，需要使用类名::函数名
++//类外实现类函数，可以写在类外，也可以写在类内
++//当头文件内已经将成员函数完成了，则不需要cpp文件了
++void Person::eat() {
++    cout << "I can eat" << endl;
++}
++void Person::sleep() {
++    cout << "I can sleep" << endl;
++}
++void Person::walk() {
++    cout << "I can walk" << endl;
++}
++
++
++
++#endif //PERSON_H
+Index: ../.idea/editor.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../.idea/editor.xml b/../.idea/editor.xml
+new file mode 100644
+--- /dev/null	
++++ b/../.idea/editor.xml	
+@@ -0,0 +1,103 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="BackendCodeEditorSettings">
++    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppClangFormat/EnableClangFormatSupport/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/EditorConfig/EnableClangFormatSupport/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_BINARY_EXPRESSIONS_CHAIN/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_CALLS_CHAIN/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_EXPRESSION/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_FOR_STMT/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTIPLE_DECLARATION/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_TERNARY/@EntryValue" value="ALIGN_ALL" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/BLANK_LINES_AROUND_CLASS_DEFINITION/@EntryValue" value="1" type="int" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/KEEP_BLANK_LINES_IN_DECLARATIONS/@EntryValue" value="2" type="int" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/KEEP_BLANK_LINES_IN_CODE/@EntryValue" value="2" type="int" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/KEEP_USER_LINEBREAKS/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INDENT_CASE_FROM_SWITCH/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INDENT_COMMENT/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INT_ALIGN_EQ/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SIMPLE_BLOCK_STYLE/@EntryValue" value="DO_NOT_CHANGE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_COMMA_IN_TEMPLATE_ARGS/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_COMMA_IN_TEMPLATE_PARAMS/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_FOR_SEMICOLON/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_FOR_SEMICOLON/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_UNARY_OPERATOR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_ARRAY_ACCESS_BRACKETS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_CAST_EXPRESSION_PARENTHESES/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_EMPTY_INITIALIZER_BRACES/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_EMPTY_METHOD_PARENTHESES/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_INITIALIZER_BRACES/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPECIAL_ELSE_IF_TREATMENT/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_CAST_EXPRESSION_PARENTHESES/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_AFTER_BINARY_OPSIGN/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_BEFORE_TERNARY_OPSIGNS/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/TYPE_DECLARATION_BRACES/@EntryValue" value="END_OF_LINE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/OTHER_BRACES/@EntryValue" value="END_OF_LINE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/CASE_BLOCK_BRACES/@EntryValue" value="END_OF_LINE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/BLANK_LINES_AROUND_FUNCTION_DECLARATION/@EntryValue" value="1" type="int" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/BLANK_LINES_AROUND_FUNCTION_DEFINITION/@EntryValue" value="1" type="int" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/PLACE_WHILE_ON_NEW_LINE/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/PLACE_ELSE_ON_NEW_LINE/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/PLACE_CATCH_ON_NEW_LINE/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/NAMESPACE_INDENTATION/@EntryValue" value="All" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_ARGUMENT/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_EXTENDS_LIST/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_PARAMETER/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_TYPE_ARGUMENT/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ALIGN_MULTILINE_TYPE_PARAMETER/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/BLANK_LINES_AROUND_DECLARATIONS/@EntryValue" value="0" type="int" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INDENT_ACCESS_SPECIFIERS_FROM_CLASS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INDENT_CLASS_MEMBERS_FROM_ACCESS_SPECIFIERS/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/LINE_BREAK_AFTER_COLON_IN_MEMBER_INITIALIZER_LISTS/@EntryValue" value="ON_SINGLE_LINE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/MEMBER_INITIALIZER_LIST_STYLE/@EntryValue" value="DO_NOT_CHANGE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/PLACE_NAMESPACE_DEFINITIONS_ON_SAME_LINE/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_COLON_IN_BITFIELD_DECLARATOR/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_COLON_IN_BITFIELD_DECLARATOR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_EXTENDS_COLON/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_EXTENDS_COLON/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_FOR_COLON/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_FOR_COLON/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_PTR_IN_DATA_MEMBER/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_PTR_IN_DATA_MEMBERS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_PTR_IN_METHOD/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_PTR_IN_NESTED_DECLARATOR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_REF_IN_DATA_MEMBER/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_REF_IN_DATA_MEMBERS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_AFTER_REF_IN_METHOD/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_PTR_IN_ABSTRACT_DECL/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_PTR_IN_DATA_MEMBER/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_PTR_IN_DATA_MEMBERS/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_PTR_IN_METHOD/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_REF_IN_ABSTRACT_DECL/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_REF_IN_DATA_MEMBER/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_REF_IN_DATA_MEMBERS/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_REF_IN_METHOD/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_TEMPLATE_ARGS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BEFORE_TEMPLATE_PARAMS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_BETWEEN_CLOSING_ANGLE_BRACKETS_IN_TEMPLATE_ARGS/@EntryValue" value="true" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_EMPTY_TEMPLATE_PARAMS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_TEMPLATE_ARGS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_TEMPLATE_PARAMS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_DECLARATION_PARENTHESES/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/SPACE_WITHIN_EMPTY_BLOCKS/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_BEFORE_INVOCATION_LPAR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_AFTER_INVOCATION_LPAR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_BEFORE_INVOCATION_RPAR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_BEFORE_DECLARATION_LPAR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_AFTER_DECLARATION_LPAR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_BEFORE_DECLARATION_RPAR/@EntryValue" value="false" type="bool" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_ARGUMENTS_STYLE/@EntryValue" value="WRAP_IF_LONG" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/WRAP_PARAMETERS_STYLE/@EntryValue" value="WRAP_IF_LONG" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/BREAK_TEMPLATE_DECLARATION/@EntryValue" value="LINE_BREAK" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/NAMESPACE_DECLARATION_BRACES/@EntryValue" value="END_OF_LINE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/FREE_BLOCK_BRACES/@EntryValue" value="END_OF_LINE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INVOCABLE_DECLARATION_BRACES/@EntryValue" value="END_OF_LINE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/ANONYMOUS_METHOD_DECLARATION_BRACES/@EntryValue" value="END_OF_LINE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INITIALIZER_BRACES/@EntryValue" value="END_OF_LINE_NO_SPACE" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INDENT_STYLE/@EntryValue" value="Space" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/INDENT_SIZE/@EntryValue" value="4" type="int" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/CONTINUOUS_LINE_INDENT/@EntryValue" value="Double" type="string" />
++    <option name="/Default/CodeStyle/CodeFormatting/CppFormatting/TAB_WIDTH/@EntryValue" value="4" type="int" />
++  </component>
++</project>
+\ No newline at end of file
+Index: 01_BasicGrammar/Basic/main.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/01_BasicGrammar/Basic/main.cpp b/01_BasicGrammar/Basic/main.cpp
+new file mode 100644
+--- /dev/null	
++++ b/01_BasicGrammar/Basic/main.cpp	
+@@ -0,0 +1,38 @@
++//
++// Created by main on 2024/7/14.
++//
++#include <iostream>
++#include "Basic/Person.h"
++using  namespace std;
++
++int main() {
++
++    std::cout << "Memory addresses of various object instantiations:" << std::endl;
++    // 1. Implicit call by directly creating an object on the stack
++    Person xiaobai;
++    std::cout << &xiaobai << std::endl;
++
++    // 2. Explicit instantiation using the default constructor
++    Person xiaobei = Person();
++    std::cout << &xiaobei << std::endl;
++
++    // 3. Using the 'new' keyword to create an object on the heap
++    Person* xiaowang = new Person();
++    std::cout << xiaowang << std::endl;
++
++    std::cout << "Calling methods:" << std::endl;
++
++    std::cout << "Calling methods on objects instantiated with 'new':" << std::endl;
++    xiaowang->eat();
++    xiaowang->sleep();
++    xiaowang->walk();
++
++    std::cout << "Calling methods on objects not instantiated with 'new':" << std::endl;
++    xiaobai.eat();
++    xiaobai.sleep();
++    xiaobai.walk();
++
++    delete xiaowang; // Remember to free the memory allocated with 'new'
++
++    return 0;
++}
+\ No newline at end of file
+Index: clion git test.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/clion git test.md b/clion git test.md
+new file mode 100644
+--- /dev/null	
++++ b/clion git test.md	
+@@ -0,0 +1,834 @@
++# Object Oriented Cpp
++[toc]
++## 00 OOP基础
++### 00.0 面向对象和面向过程的区别
++-   **面向过程**
++    -   是一种看待问题、解决问题的思维方式，着眼点在于问题是如何一步步的解决的，然后亲力亲为的解决问题。
++-   **面向对象**
++    -   是一种看待问题、解决问题的思维方式，着眼点在于找到一个能够帮助解决问题的实体，然后委托这个实体来解决问题。
++### 00.1 类与对象
++在面向对象的编程思想中，着眼点在于找到一个能够帮助解决问题的实体，然后委托这个实体解决问题。
++
++在这里，这个具有特定的功能，能够解决特定问题的实体，就是一个**对象**。
++
++由若干个具有相同的特征和行为的对象的组成的集合，就是一个**类**。
++
++> 类是对象的集合，对象是类的具体例子。
++### 00.2 类的设计与对象的创建
++#### 00.2.0 类的设计
++
++从若干个具有相同的特征和行为的对象中，提取出这些相同的特征和行为，设计为一个类。
++
++类中定义所有的对象共有的特征和行为，其中，特征用**属性**表示，行为用**方法**表示。
++
++> 所谓属性，其实就是定义在类中的一个变量。
++
++```c++
++// 设计一个类，描述人
++// 属性: 姓名、性别、年龄
++// 方法: 走路、吃饭
++class Person {
++public:
++    string name;
++    string gender;
++    int age;
++    
++    void walk() {
++        cout << "人类会走路" << endl;
++    }
++    void eat() {
++        cout << "人类会吃饭" << endl;
++    }
++}
++```
++
++>   注意事项:
++>
++>   在类中定义的属性、方法，默认都是private的权限，在类外是不能访问的。如果需要在类外访问，需要修改为public权限。
++>
++>   public: 在任意位置都可以访问
++>
++>   protected: 在当前类和子类中可以访问
++>
++>   private: 只能在当前类中访问
++
++#### 00.2.1 对象的创建
++
++```c++
++int main() {
++	// 1. 直接创建对象，隐式调用
++    Person xiaobai;
++
++    // 2. 显式调用
++    Person xiaobei = Person();
++    
++    // 3. 关键字new   
++    Person* xiaowang = new Person();
++    
++    return 0;
++}
++```
++
++在上述的三种创建方式中，前两种方式是类似的。我们在创建对象的时候，区别主要是有没有使用关键字new。
++
++|            | 使用new                | 没有使用new    |
++| ---------- | ---------------------- | -------------- |
++| 内存方面   | 在堆空间开辟           | 在栈空间开辟   |
++| 内存管理   | 需要手动使用delete销毁 | 不需要手动销毁 |
++| 属性初始化 | 自动有默认的初始值     | 没有初始值     |
++| 语法       | 需要用类*来接收变量    | 不需要使用*    |
++| 成员访问   | 通过.访问              | 通过->访问     |
++
++#### 00.2.2 对象成员的访问
++
++成员访问，即访问类中的成员（属性、方法）。
++
++```c++
++int main() {
++    // 创建Person对象
++    Person xiaobai;
++    
++    // 访问类中的属性
++    xiaobai.name = "xiao bai";
++    xiaobai.age = 10;
++    
++    // 访问类中的方法
++    xiaobai.walk();
++    xiaobai.eat();
++}
++```
++
++```c++
++int main() {
++    // 使用new创建对象
++    Person* xiaobai = new Person();
++    
++    // 访问类中的属性
++    xiaobai -> name = "xiao bai";
++    xiaobai -> age = 1;
++    
++    // 访问类中的方法
++    xiaobai -> walk();
++    xiaobai -> eat();
++}
++```
++#### 00.2.3  类的本质
++类的本质，其实就是一个结构体。
++在C++中，struct 和 class 在语法上非常相似，  
++主要区别在于默认的访问级别不同：  
++struct 的默认访问级别是 public，而 class 的默认访问级别是 private。  
++下面我将给出一个 Person 类和一个同功能的 PersonStruct 结构体的例子，它们都将包含一些成员变量和成员函数。
++
++
++1. person类
++    ```c++
++    
++    class Person {
++    public:
++        // 构造函数
++        Person(const std::string& name, int age) : m_name(name), m_age(age) {}
++    
++        // 成员函数
++        void printInfo() const {
++            std::cout << "Name: " << m_name << ", Age: " << m_age << std::endl;
++        }
++    
++    private:
++        std::string m_name; // 姓名
++        int m_age;          // 年龄
++    };
++    
++    ```
++2. person结构体
++   ```c++
++   struct PersonStruct {
++       // 构造函数
++       PersonStruct(const std::string& name, int age) : m_name(name), m_age(age) {}
++   
++       // 成员函数
++       void printInfo() const {
++           std::cout << "Name: " << m_name << ", Age: " << m_age << std::endl;
++       }
++   
++   private:
++       std::string m_name; // 姓名
++       int m_age;          // 年龄
++   };
++   ```
++#### 00.2.4 类外和其他文件中实现类函数
++类外其他文件中实现类函数，需要使用类名::函数名来调用。
++##### 00.2.4.1 类外实现类函数
++```c++
++class Person {
++public:
++    void walk();		// 在这里只是定义
++}
++
++void Person::walk() {
++    cout << "person walk" << endl;
++}
++```
++##### 00.2.4.2 其他文件中实现
++
++>   如果我们设计的类需要在其他的文件中访问，需要设计头文件！
++
++**person.h**
++
++```c++
++#ifndef BASIC_LEARNING_PERSON_H
++#define BASIC_LEARNING_PERSON_H
++
++class Person {
++public:
++    void walk();
++};
++
++#endif
++```
++
++**person.cpp**
++
++```c++
++#include "Person.h"
++
++void Person::walk() {
++    cout << "person walk" << endl;
++}
++```
++#### 00.2.5 静态
++静态成员变量和静态成员函数，不需要创建对象，就可以直接访问。  
++我们在类中定义成员的时候（函数、属性），可以使用关键字**static**来修饰，而这里的关键字static表示的就是**静态**。
++在一个类中，被static修饰的成员，称为静态成员，可以分为: 静态属性、静态函数
++##### 00.2.5.1 静态属性
++
++静态的属性内存是开辟在全局区的，与对象无关，并不隶属于对象。在程序编译的时候，就已经完成了空间的开辟与初始化的赋值操作了，并且在程序运行的整个过程中是始终保持的。
++
++静态属性的空间开辟早于对象的创建，并且静态属性不隶属于对象，而是被所有的对象所共享的。因此，如果你希望某一个属性是可以被所有的对象所共享的，就可以设置为静态的属性。
++
++```c++
++#include <iostream>
++
++using namespace std;
++
++namespace part1 {
++	class Person
++	{
++	public:
++		// 静态的成员变量，必须在类内定义、类外初始化赋值
++		static int countOfObjs;
++		// 静态的常量，可以在类内定义，并同时进行初始化；也可以在类内定义、类外进行初始化
++		const static int MIN_AGE;
++	};
++	int Person::countOfObjs = 0;
++	const int Person::MIN_AGE = 0;
++}
++
++using namespace part1;
++
++int main() {
++
++	// 访问静态成员变量（属性）
++	
++	// 可以直接使用类来访问
++	Person::countOfObjs = 20;		
++
++	// 也可以通过对象来访问，但是即便使用不同的对象，访问到的空间仍然是相同的空间
++	Person xiaobai;
++	Person xiaohei;
++	xiaohei.countOfObjs = 100;
++	cout << xiaobai.countOfObjs << endl;
++    
++    return 0;
++}
++```
++##### 00.2.5.2 静态函数
++
++被关键字static修饰的函数就是静态函数，与静态属性类似，静态函数依然不隶属于某一个对象，而是隶属于当前类的。静态的函数可以使用对象来调用，也可以直接使用类来调用。
++
++```c++
++#include <iostream>
++
++using namespace std;
++
++namespace part1 {
++	class Person
++	{
++	public:
++		static void test() {
++			cout << "person test" << endl;
++		}
++	};
++}
++
++using namespace part1;
++
++int main() {
++	// 使用类来访问
++	Person::test();
++
++	return 0;
++}
++```
++
++## 01 构造与析构
++### 01.0 构造函数的定义
++构造函数，是一个比较特殊的函数。我们在使用一个类的对象的时候，需要为其分配空间。空间分配完成之后，我们一般都会对创建的对象的属性进行初始化的操作。而这个过程就可以在构造函数中来完成了。
++
++因此: 构造函数是一个函数，是在对象创建的时候触发，用来对对象的属性进行初始化的赋值操作。
++###  01.1 构造函数的声明
++-   构造函数的名字，必须和类的名字相同！
++-   构造函数不能写返回值类型！
++-   构造函数可以有不同的重载！
++
++```c++
++class Person {
++public:
++    // 这就是一个无参的构造函数
++    Person() {
++        cout << "无参构造函数执行了!" << endl;
++    }
++    
++    // 这就是一个有参的构造函数
++    Person(int age) {
++        cout << "有参构造函数执行了！参数age = " << age << endl;
++    }
++}
++```
++### 01.2 构造函数的调用
++```c++
++// 构造函数的定义：
++//		1、构造函数没有返回值类型，不能写，连void都不能写
++//		2、构造函数的名字必须与类名相同
++//		3、构造函数可以通过不同的参数，来实现重载(Overload)
++
++class Person {
++public:
++	Person() {
++		cout << "Person类的无参构造函数执行了" << endl;
++	}
++
++	Person(int age) {
++		cout << "Person类的有参构造函数执行了" << endl;
++	}
++
++	Person(int age, int score) {
++		cout << "Person(int, int)构造函数执行了" << endl;
++	}
++};
++
++int main() {
++
++	// 构造函数的使用：是在创建对象的时候调用的。
++	// 
++	// 显式调用
++	// Person xiaoming = Person();
++	// Person xiaoming = Person(10);
++	// Person xiaoming = Person(10, 20);
++	// 
++	// Person xiaoming;		// 注意事项：如果用这种缩写的方式，切记，如果使用无参构造函数的方式来创建对象，不能添加()
++	// Person xiaoming(10);
++	// Person xiaoming(10, 20);
++
++	// 隐式调用
++    // Person xiaoming = {};
++	// Person xiaoming = {10};		// 这里的大括号可以省略不写
++    // Person xiaoming = {10, 20};
++
++	// Person* xiaoming = new Person();
++	// Person* xiaoming = new Person(10);
++	// Person* xiaoming = new Person(10, 20);
++
++	return 0;
++}
++```
++
++### 01.3 explicit关键字
++
++c++提供了关键字explicit，禁止通过构造函数进行的隐式转换。声明为explicit的构造函数不能在隐式转换中使用。
++
++```c++
++class Person {
++public:
++    int age;
++    explicit Person(int a) {
++        age = a;
++    }
++}
++
++int main() {
++    // 这里创建对象会出错，因为一个参数的构造函数已经被修饰为了explicit，不允许隐式转换。
++    Person xiaoming = 10;
++    
++    return 0;
++}
++```
++
++### 01.4 构造函数注意事项
++-   如果在一个类中，没有手动写任意的构造函数，此时系统会自动为其提供一个public权限的无参构造函数。
++-   如果在一个类中，写了任意的一个构造函数，此时系统将不再提供默认的无参构造函数。如果需要的话，需要自己书写。
++
++```c++
++class Person {
++public:
++    int age;
++    
++    Person(int age) {
++        this->age = age;
++    }
++}
++
++int main() {
++    
++    Person p;	// 这样的对象创建会出错，因为现在Person类中，没有无参的构造函数。
++    
++    return 0;
++}
++```
++### 01.5 构造函数的初始化列表
++我们自己书写构造函数，很大的一个用途就是对属性进行初始化的赋值操作，就像如下代码：
++
++```c++
++class Person {
++public:
++    string name;
++    int age;
++    string gender;
++    int score;
++    
++    Person() {
++        cout << "Person的无参构造函数执行了" << endl;
++        // 希望给属性进行初始化的赋值操作
++        name = "xiaobai";
++        age = 18;
++        gender = "male";
++        score = 99;
++    }
++    
++    Person(string n, int a, string g, int s) {
++        cout << "Person的有参构造函数执行了" << endl;
++        // 希望给属性使用指定的值进行初始化
++        name = n;
++        age = a;
++        gender = g;
++        score = s;
++    }
++}
++```
++
++在上述的代码中，无论是无参的构造函数还是有参的构造函数，我们的目的都是在创建对象的时候，为属性进行初始化的赋值操作。但是重复的这样的赋值有点麻烦，此时，C++为我们提供了初始化列表的方式，来对属性进行初始化的赋值操作。
++
++```c++
++class Person {
++public:
++    string name;
++    int age;
++    string gender;
++    int score;
++    
++    Person() : name("xiaobai"), age(18), gender("male"), score(99)
++    {
++        cout << "Person的无参构造函数执行了" << endl;
++    }
++    
++    Person(string n, int a, string g, int s) : name(n), age(a), gender(g), score(s)
++    {
++        cout << "Person的有参构造函数执行了" << endl;
++    }
++}
++```
++### 01.6 拷贝构造函数
++拷贝构造函数是C++中的另外一种构造函数，这个构造函数也是可以由系统自动提供的。
++
++```
++如果我们没有给一个类写拷贝构造函数，系统会自动的生成一个默认的拷贝构造函数，为每一个属性进行赋值。
++如果需要在拷贝构造函数中实现自己的拷贝逻辑，需要自己书写拷贝构造函数。
++```
++
++**系统默认的拷贝构造函数：**
++
++```c++
++class Person {
++public:
++    string name;
++    int age;
++    
++    Person() {
++        cout << "Person的无参构造函数执行了" << endl;
++    }
++    
++    Person(string n, int a) {
++        name = n;
++        age = a;
++        cout << "Person的有参构造函数执行了" << endl;
++    }
++}
++
++int main() {
++    
++    // 在上述的Person类中，我们并没有去写拷贝构造函数，此时系统会自动的提供一个拷贝构造函数，实现对属性的赋值操作。
++    Person p1("xiaoming", 19);
++    // 这里就是默认执行的拷贝构造函数，相当于 Person p2 = Person(p1);
++    // 得到的对象p2的属性值与p1对象的属性值完全相同
++    Person p2(p1);
++    
++    cout << "p1.name = " << p1.name << ", p1.age = " << p1.age << endl;
++    cout << "p2.name = " << p2.name << ", p2.age = " << p2.age << endl;
++    
++    return 0;
++}
++```
++
++**自己实现拷贝构造函数：**
++
++```c++
++class Person {
++public:
++    string name;
++    int age;
++    
++    Person() {
++        cout << "Person的无参构造函数执行了" << endl;
++    }
++    
++    Person(string n, int a) {
++        name = n;
++        age = a;
++        cout << "Person的有参构造函数执行了" << endl;
++    }
++    
++    Person(const Person& p) {
++        cout << "Person的拷贝构造函数执行了" << endl;
++        name = p.name;
++        age = p.age;
++    }
++}
++
++int main() {
++    
++    Person p1("xiaoming", 19);
++    // 这里就是执行的拷贝构造函数，相当于 Person p2 = Person(p1);
++    // 得到的对象p2的属性值与p1对象的属性值完全相同
++    Person p2(p1);
++    
++    cout << "p1.name = " << p1.name << ", p1.age = " << p1.age << endl;
++    cout << "p2.name = " << p2.name << ", p2.age = " << p2.age << endl;
++    
++    return 0;
++}
++```
++
++### 01.7 析构函数
++我们将一个对象从空间开辟开始，到空间销毁结束，这样的过程称为是一个对象的一生，用“生命周期”来描述这样的过程。对象的生命周期的起点是构造函数，而对象的生命周期的终点就是析构函数。
++
++析构函数，将会在对象被销毁之前自动调用。
++
++析构函数也是可以由系统自动生成的。
++
++```c++
++class Person {
++public:
++    int age;
++    int* score;
++    
++    Person() {
++        cout << "Person的无参构造函数执行了" << endl;
++    }
++    
++    // 这就是Person的析构函数，析构函数只能这样书写，且不能有参数
++    // 通常在析构函数中，我们会进行一些资源的释放，例如开辟的堆中的内存
++    ~Person() {
++        cout << "Person的析构函数执行了，表示这个对象即将被销毁了" << endl;
++        if (score != NULL) {
++            delete score;	// 释放对应的堆空间
++            score = NULL;	// 释放本来存储的地址，防止野指针
++        }
++    }
++}
++```
++### 01.8 深拷贝与浅拷贝的问题
++
++深拷贝与浅拷贝是一个老生常谈的问题，在数组的部分提到过，在面向对象部分也有这两个概念。在这里我们首先需要先区分一下什么是深拷贝，什么是浅拷贝。
++
++**浅拷贝：**在拷贝构造函数中，直接完成属性的赋值操作。
++
++**深拷贝：**在拷贝构造函数中，创建一个新的空间，使得属性中的指针指向这个新的空间。
++#### 01.8.0 浅拷贝案例
++
++```c++
++class Person {
++public:
++    int age;
++    int* score;
++    
++    Person(int a, int s) {
++        cout << "Person的有参构造函数执行了" << endl;
++        age = a;
++        score = new int(s);
++    }
++    
++    Person(const Person& p) {
++        cout << "拷贝构造函数" << endl;
++		// 拷贝构造函数的默认实现，是直接进行属性值的拷贝
++        age = p.age;
++        score = p.score;
++    }
++    
++    ~Person() {
++        cout << "析构函数执行了" << endl;
++        // 将score指向的堆空间销毁
++        if (score != NULL) {
++            delete score;
++            score = NULL;
++        }
++    }
++}
++
++int main() {
++    // 创建一个对象
++    Person p1(18, 99);
++    // 通过拷贝构造函数，拷贝出一个新的对象
++    Person p2(p1);
++    
++    // 在刚才的拷贝构造函数中，属性值直接进行值的拷贝，这个过程就是一个浅拷贝
++    // 对比两个对象的score地址，完全相同
++    cout << p1.score << endl;
++    cout << p2.score << endl;
++    
++    // 现在直接运行这个程序就会出问题了
++    
++    // 问题出现原因：
++    // 由于现在是浅拷贝，p2的属性score和p1的属性score存储的地址是完全相同的。
++    // main函数执行结束，p1、p2都是局部变量，需要销毁。
++    // 先销毁p2，执行p2的析构函数，此时p2.score指向的空间被销毁了。
++    // 再销毁p1，执行p1的析构函数，此时p1.score指向了一个已经被销毁了空间，p1.score已经是一个野指针了。会出现问题！
++    
++    return 0;
++}
++```
++
++#### 01.8.1 深拷贝案例
++
++```c++
++class Person {
++public:
++    int age;
++    int* score;
++    
++    Person(int a, int s) {
++        cout << "Person的有参构造函数执行了" << endl;
++        age = a;
++        score = new int(s);
++    }
++    
++    Person(const Person& p) {
++        cout << "拷贝构造函数" << endl;
++		// 拷贝构造函数的默认实现，是直接进行属性值的拷贝
++        age = p.age;
++        
++        // 这里不再是简简单单的值拷贝，而是在堆上创建了一个新的空间，新空间中存储原来p的score对应的值
++        // 然后将这个新的空间地址给score进行赋值
++        score = new int(*p.score);	
++    }
++    
++    ~Person() {
++        cout << "析构函数执行了" << endl;
++        // 将score指向的堆空间销毁
++        if (score != NULL) {
++            delete score;
++            score = NULL;
++        }
++    }
++}
++
++int main() {
++    // 创建一个对象
++    Person p1(18, 99);
++    // 通过拷贝构造函数，拷贝出一个新的对象
++    Person p2(p1);
++    
++    // 在刚才的拷贝构造函数中，score属性是开辟了一个新的空间的
++    // 对比两个对象的score地址，不相同的
++    cout << p1.score << endl;
++    cout << p2.score << endl;
++    
++    // 对比两个对象的score指向的值，是相同的
++    cout << *p1.score << endl;
++    cout << *p2.score << endl;
++    
++    // 此时程序执行结束前，p2.score指向的空间被销毁，与p1.score指向的空间没有关系
++    // 因此，p1.score在进行空间销毁的时候也就不会有任何问题
++    return 0;
++}
++```
++## 02 this指针
++this指针，是一个隐式的指针，它指向当前对象的地址。
++
++### 02.0 this是什么
++
++在C++中，this是一个指针，用来指向当前的对象的！
++
++```c++
++class Person {
++public:
++    Person() {}
++    Person(int a): age(a) {}
++    
++    int getAge() {
++        return age;
++    }
++    
++private:
++    int age;
++}
++```
++
++在上述代码中，类Person中有一个函数getAge，可以返回属性age的值。那么问题来了，一个类可以有多个对象的。而非静态的属性age是隶属于对象的。不同的对象的age，在内存中的空间肯定也是不同的。如何区分需要返回哪一个对象的age呢？
++
++在一个类中，涉及到成员的访问的时候，非静态的成员访问，通常都会使用this指针来访问。
++
++```c++
++class Person {
++public:
++    Person() {}
++    Person(int a): age(a) {}
++    
++    // 这里使用this指针来访问age属性，这种写法是默认的，并且this是可以省略不写的
++    // 那么所谓的当前对象到底是谁呢？
++    // 最简单的理解就是: 哪个对象调用这个函数，this指针就指向谁
++    int getAge() {
++        return this->age;
++    }
++    
++private:
++    int age;
++}
++```
++
++### 02.1 this不可省略的情况
++
++绝大多数的情况下，在一个类的内部，访问当前类中的非静态成员的时候，this指针都是可以省略不写的。但是有一种情况，this指针不能省略，必须要显式的写出来:
++
++如果在一个函数中出现了与当前类的属性同名字的局部变量！为了区分局部变量还是属性，此时的this指针不能省略。
++
++```c++
++class Person {
++public:
++    int age;
++    
++    // 在这个构造函数中，出现了一个局部变量age，与属性名字相同了
++    // 于是为了区分这两个，需要使用this指针显式的指向age属性来进行访问
++    Person(int age) {
++        this->age = age;
++	}
++}
++```
++### 02.2 返回当前对象的函数
++
++```c++
++class Point {
++public:
++    int x;
++    int y;
++    Point() {}
++    Point(int x, int y): x(x), y(y) {}
++    
++    // 返回当前对象的引用
++    Point& add(int deltaX, int deltaY) {
++        x += deltaX;
++        y += deltaY;
++        // this是一个指针，用来指向当前的对象
++        // 因此，如果需要返回当前的对象的话，就需要使用*来访问
++        return *this;
++	}
++}
++```
++### 02.3 空指针访问成员函数
++
++在C++中，使用空指针是可以访问成员函数的，但是需要注意：不能在函数中出现this指针！
++
++```c++
++class Person {
++public:
++    int age;
++    
++    Person() {}
++    Person(int age): age(age) {}
++    
++	void testFunction01() {
++        cout << "testFunction01执行了" << endl;
++    }
++    
++    void testFunction02() {
++        if (this == NULL) {
++            cout << "this是一个空指针" << endl;
++            return;
++        }
++        cout << "testFunction02执行了" << endl;
++    }
++    
++    void getAge() {
++        return age;
++    }
++}
++
++int main() {
++    // 创建一个空对象
++    Person* person = NULL;
++    
++    // 函数访问
++    person->testFunction01();		// 可以正常访问，因为在这个函数中没有使用到this指针
++    person->testFunction02();		// 访问出问题，因为在这个函数中使用到了this指针
++    person->getAge();				// 访问出问题，在这个函数中虽然没有写this，但是有属性的访问，默认就是用到的this
++    
++    return 0;
++}
++```
++### 02.4 常函数与常对象
++#### 02.4.0 什么是常函数
++
++-   使用关键字const修饰的函数，叫做常函数。
++-   常函数中，不允许修改属性的值。
++-   常函数中，不允许调用其他的普通函数。
++-   如果想要在常函数中修改某个属性的值，需要将这个属性设置为mutable。
++
++```c++
++class Person {
++public:
++    string name;
++    int age;
++    mutable int score;		// 修饰为可变的，这个属性可以在常函数中进行修改
++    
++    Person(string name, int age, int score): name(name), age(age), score(score) {}
++    
++    // 定义常函数
++    void fixPerson(string newName, int newAge, int newScore) const {
++        name = newName;		// 这里会出错，不允许在常函数中修改普通属性的值
++		age = newAge;		// 这里会出错，不允许在常函数中修改普通属性的值
++        score = newScore;	// 这里可以正常修改，因此此时的score已经被修饰为mutable
++        
++        test();		// 这里会出错，不允许在常函数中调用其他的普通函数
++    }
++    
++    void test() {}
++}
++```
++#### 02.4.1 常对象
++
++-   在对象创建的时候，使用const修饰的对象，就是常对象。
++-   常对象可以访问任意的属性值，但是不能修改普通属性的值。
++-   常对象可以修改mutable属性的值。
++-   常对象只能调用常函数。
++
++```c++
++int main() {
++    // 创建一个常对象
++    const Person person("zhangsan", 18, 99);
++    
++    // 使用这个常对象进行属性访问
++	cout << person.name << endl;		// 可以正常访问
++    person.age = 100;					// 不能进行修改
++    person.score = 200;					// mutable属性，可以修改
++}
++```
++## 03 友元
++
+Index: 01_BasicGrammar/Basic/Person.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/01_BasicGrammar/Basic/Person.cpp b/01_BasicGrammar/Basic/Person.cpp
+new file mode 100644
+--- /dev/null	
++++ b/01_BasicGrammar/Basic/Person.cpp	
+@@ -0,0 +1,15 @@
++//
++// Created by main on 2024/7/14.
++//
++
++#include "Person.h"
++//类外定义类成员函数
++// void Person::eat() {
++//     cout << "I can eat" << endl;
++// }
++// void Person::sleep() {
++//     cout << "I can sleep" << endl;
++// }
++// void Person::walk() {
++//     cout << "I can walk" << endl;
++// }
+\ No newline at end of file
+Index: 01_BasicGrammar/ConstructionAndDeatruction/Person.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/01_BasicGrammar/ConstructionAndDeatruction/Person.cpp b/01_BasicGrammar/ConstructionAndDeatruction/Person.cpp
+new file mode 100644
+--- /dev/null	
++++ b/01_BasicGrammar/ConstructionAndDeatruction/Person.cpp	
+@@ -0,0 +1,5 @@
++//
++// Created by main on 2024/7/14.
++//
++
++#include "Person.h"
+Index: 01_BasicGrammar/ConstructionAndDeatruction/Person.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/01_BasicGrammar/ConstructionAndDeatruction/Person.h b/01_BasicGrammar/ConstructionAndDeatruction/Person.h
+new file mode 100644
+--- /dev/null	
++++ b/01_BasicGrammar/ConstructionAndDeatruction/Person.h	
+@@ -0,0 +1,16 @@
++//
++// Created by main on 2024/7/14.
++//
++
++#ifndef PERSON_H
++#define PERSON_H
++
++
++
++class Person {
++
++};
++
++
++
++#endif //PERSON_H
+Index: 01_BasicGrammar/Static/attribute.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/01_BasicGrammar/Static/attribute.cpp b/01_BasicGrammar/Static/attribute.cpp
+new file mode 100644
+--- /dev/null	
++++ b/01_BasicGrammar/Static/attribute.cpp	
+@@ -0,0 +1,42 @@
++//
++// Created by main on 2024/7/14.
++//
++#include <iostream>
++
++using namespace std;
++
++namespace part1 {
++    class Person
++    {
++    public:
++        // 静态的成员变量，必须在类内定义、类外初始化赋值
++        static int countOfObjs;
++
++        // 静态的常量，可以在类内定义，并同时进行初始化；也可以在类内定义、类外进行初始化
++        const static int MIN_AGE;
++    };
++    int Person::countOfObjs = 0;
++    const int Person::MIN_AGE = 0;
++}
++
++using namespace part1;
++
++int main() {
++
++    // 访问静态成员变量（属性）
++
++    // 可以直接使用类来访问
++    Person::countOfObjs = 20;
++
++    // 也可以通过对象来访问，但是即便使用不同的对象，访问到的空间仍然是相同的空间
++    Person xiaobai;
++    Person xiaohei;
++    xiaohei.countOfObjs = 100;
++    xiaobai.countOfObjs = 200;
++    xiaohei.countOfObjs ++;
++    cout << xiaobai.countOfObjs << endl;
++    cout << xiaohei.countOfObjs << endl;
++    //xiaobai.MIN_AGE = 10;
++
++    return 0;
++}
+\ No newline at end of file
+Index: 01_BasicGrammar/Static/function.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/01_BasicGrammar/Static/function.cpp b/01_BasicGrammar/Static/function.cpp
+new file mode 100644
+--- /dev/null	
++++ b/01_BasicGrammar/Static/function.cpp	
+@@ -0,0 +1,34 @@
++//
++// Created by main on 2024/7/14.
++//
++#include <iostream>
++// 被关键字static修饰的函数就是静态函数，与静态属性类似，
++// 静态函数依然不隶属于某一个对象，而是隶属于当前类的。
++// 静态的函数可以使用对象来调用，也可以直接使用类来调用。
++using namespace std;
++
++namespace part1 {
++    class Person
++    {
++    public:
++        static void test() {
++            int a=1;
++            a++;
++            cout<<a<<endl;
++            cout << "person test" << endl;
++        }
++    };
++}
++
++using namespace part1;
++
++int main() {
++    // 使用类来访问
++    Person::test();
++    Person::test();
++    //使用对象来访问
++    Person xiaobai;
++    xiaobai.test();
++
++    return 0;
++}
+\ No newline at end of file
