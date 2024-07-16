@@ -49,17 +49,11 @@ cmake_ninja_workdir = H$:/MyProjects/C-C++/BasicGrammarOfCpp/ObjectOriented/cmak
 
 build cmake_object_order_depends_target_ObjectOriented: phony || CMakeFiles/ObjectOriented.dir
 
-build CMakeFiles/ObjectOriented.dir/01_BasicGrammar/Basic/Person.cpp.obj: CXX_COMPILER__ObjectOriented_unscanned_Debug H$:/MyProjects/C-C++/BasicGrammarOfCpp/ObjectOriented/01_BasicGrammar/Basic/Person.cpp || cmake_object_order_depends_target_ObjectOriented
-  DEP_FILE = CMakeFiles\ObjectOriented.dir\01_BasicGrammar\Basic\Person.cpp.obj.d
+build CMakeFiles/ObjectOriented.dir/02_this/main.cpp.obj: CXX_COMPILER__ObjectOriented_unscanned_Debug H$:/MyProjects/C-C++/BasicGrammarOfCpp/ObjectOriented/02_this/main.cpp || cmake_object_order_depends_target_ObjectOriented
+  DEP_FILE = CMakeFiles\ObjectOriented.dir\02_this\main.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\ObjectOriented.dir
-  OBJECT_FILE_DIR = CMakeFiles\ObjectOriented.dir\01_BasicGrammar\Basic
-
-build CMakeFiles/ObjectOriented.dir/01_BasicGrammar/ConstructionAndDeatruction/main.cpp.obj: CXX_COMPILER__ObjectOriented_unscanned_Debug H$:/MyProjects/C-C++/BasicGrammarOfCpp/ObjectOriented/01_BasicGrammar/ConstructionAndDeatruction/main.cpp || cmake_object_order_depends_target_ObjectOriented
-  DEP_FILE = CMakeFiles\ObjectOriented.dir\01_BasicGrammar\ConstructionAndDeatruction\main.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\ObjectOriented.dir
-  OBJECT_FILE_DIR = CMakeFiles\ObjectOriented.dir\01_BasicGrammar\ConstructionAndDeatruction
+  OBJECT_FILE_DIR = CMakeFiles\ObjectOriented.dir\02_this
 
 
 # =============================================================================
@@ -69,7 +63,7 @@ build CMakeFiles/ObjectOriented.dir/01_BasicGrammar/ConstructionAndDeatruction/m
 #############################################
 # Link the executable ObjectOriented.exe
 
-build ObjectOriented.exe: CXX_EXECUTABLE_LINKER__ObjectOriented_Debug CMakeFiles/ObjectOriented.dir/01_BasicGrammar/Basic/Person.cpp.obj CMakeFiles/ObjectOriented.dir/01_BasicGrammar/ConstructionAndDeatruction/main.cpp.obj
+build ObjectOriented.exe: CXX_EXECUTABLE_LINKER__ObjectOriented_Debug CMakeFiles/ObjectOriented.dir/02_this/main.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ObjectOriented.dir
